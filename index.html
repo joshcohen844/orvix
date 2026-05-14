@@ -5,156 +5,218 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Orvix — Fiat to Crypto Orchestration</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Fraunces:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --ink:#0A0F1A;
-  --ink2:#111827;
-  --gold:#C9A84C;
-  --gold2:#E8C97A;
-  --teal:#1A9E82;
-  --teal-light:#22C9A8;
-  --cream:#F7F4EE;
-  --muted:#6B7A8D;
-  --border:rgba(201,168,76,0.18);
-  --border-light:rgba(255,255,255,0.08);
-  --card:rgba(255,255,255,0.03);
+  --bg:#F8F7F4;--white:#FFFFFF;--ink:#0D1117;--ink2:#1C2333;
+  --mid:#4A5568;--muted:#8896A5;--teal:#0EA27A;--teal-light:#12C994;
+  --teal-pale:#E8F8F3;--border:#E2E8F0;--border-dark:#CBD5E0;
+  --dark:#0D1117;--dark2:#141B2D;
 }
 html{scroll-behavior:smooth}
-body{background:var(--ink);color:var(--cream);font-family:'Lato',sans-serif;font-weight:300;overflow-x:hidden;line-height:1.6}
+body{background:var(--bg);color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;font-weight:400;overflow-x:hidden;line-height:1.6}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 60px;display:flex;align-items:center;justify-content:space-between;background:rgba(10,15,26,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
-.logo{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;letter-spacing:3px;color:var(--cream);text-transform:uppercase}
-.logo span{color:var(--gold)}
-.nav-links{display:flex;gap:36px;list-style:none}
-.nav-links a{color:rgba(247,244,238,0.55);text-decoration:none;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;font-weight:400;transition:color 0.25s}
-.nav-links a:hover{color:var(--gold)}
-.nav-cta{background:transparent;color:var(--gold);padding:10px 28px;border:1px solid var(--gold);border-radius:2px;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;font-family:'Lato',sans-serif;font-weight:400;transition:all 0.25s}
-.nav-cta:hover{background:var(--gold);color:var(--ink)}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 60px;height:72px;display:flex;align-items:center;justify-content:space-between;background:rgba(248,247,244,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.logo{font-size:22px;font-weight:700;color:var(--ink);letter-spacing:-0.5px}
+.logo span{color:var(--teal)}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{color:var(--mid);text-decoration:none;font-size:14px;font-weight:500;transition:color 0.2s}
+.nav-links a:hover{color:var(--ink)}
+.nav-cta{background:var(--teal);color:white;padding:10px 24px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;border:none;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.2s}
+.nav-cta:hover{background:var(--teal-light)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.hamburger span{width:22px;height:2px;background:var(--ink);border-radius:2px;display:block;transition:all 0.3s}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-nav{display:none;position:fixed;top:72px;left:0;right:0;z-index:99;background:white;border-bottom:1px solid var(--border);padding:16px 24px;flex-direction:column}
+.mobile-nav.open{display:flex}
+.mobile-nav a{color:var(--mid);text-decoration:none;font-size:16px;font-weight:500;padding:14px 0;border-bottom:1px solid var(--border);display:block}
+.mobile-nav .mob-cta{margin-top:12px;background:var(--teal);color:white;text-align:center;border-radius:10px;padding:14px;font-weight:600;border-bottom:none}
 
 /* HERO */
-.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:140px 60px 100px;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(201,168,76,0.06) 0%,transparent 70%);pointer-events:none}
-.hero-rule{width:40px;height:1px;background:var(--gold);margin:0 auto 32px}
-.hero-eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:400;margin-bottom:28px}
-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(52px,7vw,96px);font-weight:300;line-height:1.0;letter-spacing:-1px;margin-bottom:28px;color:var(--cream)}
-h1 em{font-style:italic;color:var(--gold)}
-.hero-sub{font-size:15px;color:rgba(247,244,238,0.55);max-width:520px;margin:0 auto 52px;line-height:1.8;font-weight:300;letter-spacing:0.3px}
-.hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
-.btn-gold{background:var(--gold);color:var(--ink);padding:15px 40px;border:none;border-radius:2px;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;font-family:'Lato',sans-serif;font-weight:700;transition:all 0.25s}
-.btn-gold:hover{background:var(--gold2);transform:translateY(-1px)}
-.btn-ghost{background:transparent;color:var(--cream);padding:15px 40px;border:1px solid rgba(247,244,238,0.25);border-radius:2px;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;font-family:'Lato',sans-serif;font-weight:400;transition:all 0.25s}
-.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding-top:72px}
+.hero-left{padding:80px 60px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--teal-pale);border:1px solid rgba(14,162,122,0.2);border-radius:20px;padding:6px 14px;font-size:12px;color:var(--teal);font-weight:600;margin-bottom:28px}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+h1{font-family:'Fraunces',serif;font-size:clamp(36px,4.5vw,62px);font-weight:300;line-height:1.1;letter-spacing:-1.5px;color:var(--ink);margin-bottom:24px}
+h1 em{font-style:italic;color:var(--teal)}
+.hero-sub{font-size:17px;color:var(--mid);line-height:1.8;margin-bottom:40px;max-width:480px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn-primary{background:var(--teal);color:white;padding:14px 32px;border-radius:10px;font-weight:600;font-size:15px;cursor:pointer;border:none;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.2s}
+.btn-primary:hover{background:var(--teal-light);transform:translateY(-2px);box-shadow:0 8px 24px rgba(14,162,122,0.25)}
+.btn-secondary{background:transparent;color:var(--ink);padding:14px 32px;border-radius:10px;font-weight:500;font-size:15px;cursor:pointer;border:1.5px solid var(--border-dark);font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.2s}
+.btn-secondary:hover{border-color:var(--teal);color:var(--teal)}
+.hero-right{height:100vh;position:relative;overflow:hidden}
+.hero-right img{width:100%;height:100%;object-fit:cover}
+.hero-right::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(14,162,122,0.15),rgba(13,17,23,0.2))}
+.hero-chip{position:absolute;bottom:40px;left:40px;z-index:2;background:rgba(255,255,255,0.12);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.2);border-radius:14px;padding:16px 22px}
+.chip-label{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:4px}
+.chip-val{font-size:22px;font-weight:700;color:white}
+
+/* TRUST */
+.trust-bar{background:white;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:16px 60px;display:flex;align-items:center;gap:32px;overflow-x:auto}
+.trust-label{font-size:12px;color:var(--muted);font-weight:500;white-space:nowrap}
+.trust-logos{display:flex;gap:32px;align-items:center}
+.trust-logo{font-size:14px;font-weight:700;color:var(--border-dark);white-space:nowrap;cursor:default}
 
 /* STATS */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:rgba(201,168,76,0.03)}
-.stat{padding:36px 40px;text-align:center;border-right:1px solid var(--border)}
+.stats-bar{background:var(--dark);padding:0}
+.stats-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+.stat{background:var(--dark);padding:40px 32px;border-right:1px solid rgba(255,255,255,0.06)}
 .stat:last-child{border-right:none}
-.stat-num{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:500;color:var(--gold);line-height:1}
-.stat-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:8px}
+.stat-num{font-family:'Fraunces',serif;font-size:44px;font-weight:300;color:var(--teal-light);line-height:1;margin-bottom:6px}
+.stat-label{font-size:13px;color:rgba(255,255,255,0.4)}
 
-/* SECTION BASE */
-.section{padding:110px 60px;max-width:1200px;margin:0 auto}
-.section-full{padding:110px 60px}
-.section-tag{display:flex;align-items:center;gap:16px;margin-bottom:20px}
-.section-tag::before{content:'';width:24px;height:1px;background:var(--gold)}
-.section-tag span{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:400}
-h2{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,4.5vw,60px);font-weight:300;letter-spacing:-0.5px;line-height:1.1;margin-bottom:16px}
-h2 em{font-style:italic;color:var(--gold)}
-.section-intro{font-size:15px;color:rgba(247,244,238,0.5);max-width:520px;line-height:1.8;margin-bottom:64px;font-weight:300}
+/* SHARED */
+.section-tag{display:inline-flex;align-items:center;gap:6px;background:var(--teal-pale);border-radius:4px;padding:4px 12px;font-size:11px;font-weight:600;color:var(--teal);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:18px}
+h2{font-family:'Fraunces',serif;font-size:clamp(28px,3.5vw,52px);font-weight:300;letter-spacing:-1px;line-height:1.1;margin-bottom:16px;color:var(--ink)}
+h2 em{font-style:italic;color:var(--teal)}
+.section-sub{font-size:16px;color:var(--mid);line-height:1.8;max-width:520px;margin-bottom:48px}
 
-/* FIAT TO CRYPTO FLOW */
-.flow-wrap{background:var(--ink2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.flow-inner{max-width:1200px;margin:0 auto;padding:110px 60px}
-.flow-diagram{display:flex;align-items:center;gap:0;margin-top:64px;position:relative}
-.flow-node{flex:1;text-align:center;position:relative;padding:40px 24px;background:var(--card);border:1px solid var(--border);transition:border-color 0.3s}
-.flow-node:hover{border-color:rgba(201,168,76,0.4)}
-.flow-node-icon{font-size:28px;margin-bottom:16px}
-.flow-node-label{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
-.flow-node-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;margin-bottom:10px}
-.flow-node-desc{font-size:12px;color:var(--muted);line-height:1.7}
-.flow-arrow{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 8px;min-width:60px;gap:4px}
-.flow-arrow-line{width:100%;height:1px;background:linear-gradient(90deg,var(--gold),rgba(201,168,76,0.3))}
-.flow-arrow-label{font-size:9px;letter-spacing:1px;color:var(--muted);text-transform:uppercase;white-space:nowrap}
-.flow-arrow-tip{color:var(--gold);font-size:18px;margin-top:-10px}
-.flow-tags{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:14px}
-.flow-tag{font-size:10px;padding:3px 10px;border:1px solid var(--border);color:rgba(247,244,238,0.4);border-radius:1px;letter-spacing:0.5px}
-.flow-center{background:linear-gradient(135deg,rgba(201,168,76,0.08),rgba(26,158,130,0.08));border-color:rgba(201,168,76,0.35)!important;position:relative}
-.flow-center-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--ink);font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:4px 14px;font-weight:700}
+/* FLOW */
+.flow-section{background:var(--dark2)}
+.flow-inner{max-width:1200px;margin:0 auto;padding:100px 60px}
+.flow-inner h2{color:white}
+.flow-inner .section-sub{color:rgba(255,255,255,0.45)}
+.flow-steps{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:stretch;gap:12px;margin-top:48px}
+.flow-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:32px 24px;transition:all 0.3s}
+.flow-card:hover{background:rgba(255,255,255,0.07);border-color:rgba(14,162,122,0.3);transform:translateY(-4px)}
+.flow-card.center{background:linear-gradient(135deg,rgba(14,162,122,0.12),rgba(14,162,122,0.04));border-color:rgba(14,162,122,0.3)}
+.flow-badge{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--teal-light);font-weight:600;margin-bottom:10px}
+.flow-icon{font-size:32px;margin-bottom:12px;display:block}
+.flow-title{font-family:'Fraunces',serif;font-size:20px;font-weight:400;color:white;margin-bottom:10px}
+.flow-desc{font-size:13px;color:rgba(255,255,255,0.45);line-height:1.7}
+.flow-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.flow-tag{font-size:10px;padding:3px 10px;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.35);border-radius:4px}
+.flow-arr{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;opacity:0.6;padding:0 4px;min-width:44px}
+.flow-arr-icon{color:var(--teal-light);font-size:20px}
+.flow-arr-txt{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;white-space:nowrap}
 
-/* IGAMING SECTION */
-.igaming-wrap{background:linear-gradient(180deg,var(--ink) 0%,rgba(26,158,130,0.04) 50%,var(--ink) 100%)}
-.igaming-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin-top:64px;border:1px solid var(--border)}
-.igaming-card{background:var(--ink);padding:44px 40px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);transition:background 0.3s}
-.igaming-card:hover{background:rgba(26,158,130,0.04)}
-.igaming-card:nth-child(2n){border-right:none}
-.igaming-card:nth-child(3),.igaming-card:nth-child(4){border-bottom:none}
-.igaming-num{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;color:rgba(26,158,130,0.25);line-height:1;margin-bottom:20px}
-.igaming-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;margin-bottom:12px}
-.igaming-desc{font-size:13px;color:var(--muted);line-height:1.8}
-.igaming-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
-.igaming-tag{font-size:10px;padding:3px 10px;background:rgba(26,158,130,0.08);border:1px solid rgba(26,158,130,0.2);color:var(--teal-light);border-radius:1px;letter-spacing:0.5px}
-.igaming-hero{grid-column:span 2;background:rgba(26,158,130,0.04);border-bottom:1px solid rgba(26,158,130,0.15)!important;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:60px 40px}
-.igaming-hero-stat{text-align:center;padding:0 20px;border-right:1px solid var(--border)}
-.igaming-hero-stat:last-child{border-right:none}
-.igaming-hero-num{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;color:var(--teal-light)}
-.igaming-hero-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:6px}
+/* HOW */
+.how-wrap{padding:100px 60px;max-width:1200px;margin:0 auto}
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
+.how-card{background:white;border:1px solid var(--border);border-radius:16px;padding:36px;transition:all 0.25s}
+.how-card:hover{border-color:var(--teal);transform:translateY(-3px);box-shadow:0 12px 40px rgba(14,162,122,0.08)}
+.how-num{font-family:'Fraunces',serif;font-size:48px;font-weight:300;color:rgba(14,162,122,0.14);line-height:1;margin-bottom:16px}
+.how-title{font-size:16px;font-weight:600;color:var(--ink);margin-bottom:8px}
+.how-desc{font-size:14px;color:var(--mid);line-height:1.7}
 
-/* CONTACT SECTION */
-.contact-wrap{background:var(--ink2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.contact-inner{max-width:1200px;margin:0 auto;padding:110px 60px}
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:start;margin-top:64px}
-.contact-left h3{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:400;margin-bottom:20px;line-height:1.3}
-.contact-left p{font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:40px}
-.contact-methods{display:flex;flex-direction:column;gap:0}
-.contact-method{display:flex;align-items:center;gap:20px;padding:20px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:all 0.25s;text-decoration:none;color:inherit}
-.contact-method:hover .cm-label{color:var(--gold)}
-.contact-method:hover .cm-arrow{transform:translateX(4px)}
-.cm-icon{width:40px;height:40px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;transition:border-color 0.25s}
-.contact-method:hover .cm-icon{border-color:var(--gold)}
-.cm-content{flex:1}
-.cm-type{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
-.cm-label{font-size:14px;color:var(--cream);transition:color 0.25s;font-weight:400}
-.cm-arrow{font-size:18px;color:var(--gold);transition:transform 0.25s}
-.contact-form{background:rgba(255,255,255,0.02);border:1px solid var(--border);padding:48px}
-.form-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:400;margin-bottom:8px}
-.form-sub{font-size:13px;color:var(--muted);margin-bottom:36px}
-.fg{margin-bottom:20px}
-.fg label{display:block;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
-.fg input,.fg select,.fg textarea{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(247,244,238,0.1);padding:13px 16px;color:var(--cream);font-family:'Lato',sans-serif;font-size:14px;font-weight:300;outline:none;transition:border 0.25s;border-radius:0}
-.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--gold)}
-.fg select option{background:var(--ink2);color:var(--cream)}
-.fg textarea{height:100px;resize:vertical}
-.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.submit{width:100%;background:var(--gold);color:var(--ink);padding:15px;font-family:'Lato',sans-serif;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;font-weight:700;border:none;cursor:pointer;transition:all 0.25s;margin-top:8px;border-radius:0}
-.submit:hover{background:var(--gold2)}
+/* IGAMING */
+.igaming-section{background:white;padding:100px 60px}
+.igaming-inner{max-width:1200px;margin:0 auto}
+.igaming-split{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;margin-bottom:48px}
+.igaming-img{border-radius:16px;overflow:hidden;height:320px;position:relative}
+.igaming-img img{width:100%;height:100%;object-fit:cover}
+.igaming-img::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(14,162,122,0.18),transparent)}
+.igaming-stats{display:flex;margin-top:24px;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.ig-stat{flex:1;padding:16px 20px;border-right:1px solid var(--border);text-align:center}
+.ig-stat:last-child{border-right:none}
+.ig-stat-num{font-family:'Fraunces',serif;font-size:26px;font-weight:400;color:var(--teal)}
+.ig-stat-label{font-size:11px;color:var(--muted);margin-top:3px}
+.igaming-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.ig-card{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:28px;transition:all 0.25s}
+.ig-card:hover{border-color:var(--teal);background:var(--teal-pale);transform:translateY(-2px)}
+.ig-icon{width:40px;height:40px;border-radius:10px;background:var(--teal-pale);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:14px}
+.ig-title{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:8px}
+.ig-desc{font-size:13px;color:var(--mid);line-height:1.7}
+.ig-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.ig-tag{font-size:11px;padding:3px 10px;background:white;border:1px solid var(--border);color:var(--mid);border-radius:20px}
 
-/* PROCESS */
-.process-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:64px;border:1px solid var(--border)}
-.process-step{background:var(--ink);padding:48px 36px;border-right:1px solid var(--border);position:relative}
-.process-step:last-child{border-right:none}
-.ps-num{font-family:'Cormorant Garamond',serif;font-size:64px;font-weight:300;color:rgba(201,168,76,0.12);line-height:1;margin-bottom:24px}
-.ps-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;margin-bottom:14px}
-.ps-desc{font-size:13px;color:var(--muted);line-height:1.8}
+/* CONTACT */
+.contact-section{background:var(--dark)}
+.contact-inner{max-width:1200px;margin:0 auto;padding:100px 60px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.contact-left h2{color:white}
+.contact-left .section-sub{color:rgba(255,255,255,0.45)}
+.contact-info{margin-top:36px;display:flex;flex-direction:column;gap:16px}
+.contact-email-block{display:flex;align-items:center;gap:16px;padding:20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;text-decoration:none;transition:all 0.2s}
+.contact-email-block:hover{border-color:rgba(14,162,122,0.4);background:rgba(14,162,122,0.06)}
+.ce-icon{width:44px;height:44px;border-radius:10px;background:rgba(14,162,122,0.15);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.ce-type{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:3px}
+.ce-label{font-size:16px;color:white;font-weight:500}
+.ce-arrow{margin-left:auto;color:var(--teal-light);font-size:20px}
+.contact-promise{background:rgba(14,162,122,0.08);border:1px solid rgba(14,162,122,0.2);border-radius:12px;padding:20px;margin-top:4px}
+.cp-title{font-size:14px;font-weight:600;color:var(--teal-light);margin-bottom:6px}
+.cp-desc{font-size:13px;color:rgba(255,255,255,0.45);line-height:1.6}
+
+.contact-form{background:white;border-radius:20px;padding:44px;box-shadow:0 24px 80px rgba(0,0,0,0.35)}
+.form-title{font-family:'Fraunces',serif;font-size:26px;font-weight:400;color:var(--ink);margin-bottom:6px}
+.form-sub{font-size:14px;color:var(--muted);margin-bottom:28px}
+.fg{margin-bottom:14px}
+.fg label{display:block;font-size:12px;font-weight:600;color:var(--mid);margin-bottom:6px}
+.fg input,.fg select,.fg textarea{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:12px 14px;color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;outline:none;transition:border 0.2s;-webkit-appearance:none}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--teal);background:white}
+.fg select option{background:white}
+.fg textarea{height:84px;resize:none}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.submit-btn{width:100%;background:var(--teal);color:white;padding:14px;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;border:none;cursor:pointer;transition:all 0.2s;margin-top:4px}
+.submit-btn:hover{background:var(--teal-light)}
 
 /* FOOTER */
-footer{border-top:1px solid var(--border);padding:48px 60px;display:flex;align-items:center;justify-content:space-between;background:var(--ink2)}
-.footer-logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;letter-spacing:3px;text-transform:uppercase}
-.footer-logo span{color:var(--gold)}
-.footer-links{display:flex;gap:36px;list-style:none}
-.footer-links a{color:var(--muted);text-decoration:none;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.2s}
-.footer-links a:hover{color:var(--gold)}
-.footer-copy{font-size:11px;color:rgba(247,244,238,0.2);letter-spacing:0.5px}
+footer{background:var(--dark2);border-top:1px solid rgba(255,255,255,0.06);padding:36px 60px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px}
+.footer-logo{font-size:18px;font-weight:700;color:white}
+.footer-logo span{color:var(--teal)}
+.footer-links{display:flex;gap:28px;list-style:none;flex-wrap:wrap}
+.footer-links a{color:rgba(255,255,255,0.3);text-decoration:none;font-size:13px;transition:color 0.2s}
+.footer-links a:hover{color:white}
+.footer-copy{font-size:12px;color:rgba(255,255,255,0.18)}
 
-@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
-.hero>*{animation:fadeUp 0.8s ease both}
-.hero>*:nth-child(1){animation-delay:0.1s}
-.hero>*:nth-child(2){animation-delay:0.2s}
-.hero>*:nth-child(3){animation-delay:0.35s}
-.hero>*:nth-child(4){animation-delay:0.5s}
-.hero>*:nth-child(5){animation-delay:0.65s}
+/* ══ MOBILE ══ */
+@media(max-width:768px){
+  nav{padding:0 20px}
+  .nav-links,.nav-cta{display:none}
+  .hamburger{display:flex}
+
+  /* hero stacks */
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .hero-left{padding:48px 20px 36px}
+  .hero-sub{font-size:15px}
+  .hero-right{height:240px}
+  .hero-chip{bottom:16px;left:16px;padding:12px 16px}
+  .chip-val{font-size:18px}
+  .btn-primary,.btn-secondary{padding:13px 24px;font-size:14px}
+
+  /* trust */
+  .trust-bar{padding:14px 20px;gap:20px}
+  .trust-logos{gap:20px}
+
+  /* stats 2x2 */
+  .stats-inner{grid-template-columns:1fr 1fr}
+  .stat{padding:28px 20px;border-right:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06)}
+  .stat:nth-child(even){border-right:none}
+  .stat:nth-child(3),.stat:nth-child(4){border-bottom:none}
+  .stat-num{font-size:34px}
+
+  /* flow vertical */
+  .flow-inner{padding:64px 20px}
+  .flow-steps{grid-template-columns:1fr;gap:0}
+  .flow-arr{flex-direction:row;padding:10px 0;min-width:auto;justify-content:flex-start;gap:8px}
+  .flow-arr-icon{transform:rotate(90deg)}
+
+  /* how */
+  .how-wrap{padding:64px 20px}
+  .how-grid{grid-template-columns:1fr;gap:14px}
+  .how-num{font-size:40px}
+
+  /* igaming */
+  .igaming-section{padding:64px 20px}
+  .igaming-split{grid-template-columns:1fr;gap:32px}
+  .igaming-img{height:200px}
+  .igaming-cards{grid-template-columns:1fr;gap:12px}
+
+  /* contact */
+  .contact-inner{grid-template-columns:1fr;gap:40px;padding:64px 20px}
+  .contact-form{padding:24px 20px;border-radius:14px}
+  .fg-row{grid-template-columns:1fr}
+  .form-title{font-size:22px}
+
+  /* footer */
+  footer{padding:28px 20px;flex-direction:column;align-items:flex-start;gap:16px}
+  .footer-links{gap:16px}
+}
 </style>
 </head>
 <body>
@@ -166,223 +228,239 @@ footer{border-top:1px solid var(--border);padding:48px 60px;display:flex;align-i
     <li><a href="#flow">How It Works</a></li>
     <li><a href="#igaming">iGaming</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#">Documentation</a></li>
   </ul>
-  <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get in touch</button>
+  <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get started</button>
+  <button class="hamburger" id="ham" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="#flow" onclick="closeMenu()">How It Works</a>
+  <a href="#igaming" onclick="closeMenu()">iGaming</a>
+  <a href="#contact" onclick="closeMenu()">Contact</a>
+  <a href="#contact" class="mob-cta" onclick="closeMenu()">Get started →</a>
+</div>
+<script>
+function toggleMenu(){
+  document.getElementById('mobileNav').classList.toggle('open');
+  document.getElementById('ham').classList.toggle('open');
+}
+function closeMenu(){
+  document.getElementById('mobileNav').classList.remove('open');
+  document.getElementById('ham').classList.remove('open');
+}
+</script>
 
 <!-- HERO -->
 <div class="hero">
-  <div class="hero-rule"></div>
-  <div class="hero-eyebrow">Payment Orchestration · Fiat to Crypto</div>
-  <h1>Where <em>fiat</em> meets<br>the future of money</h1>
-  <p class="hero-sub">Orvix is the institutional-grade orchestration layer connecting payment providers, compliance engines, and crypto liquidity — built for iGaming, fintech, and Web3 at scale.</p>
-  <div class="hero-actions">
-    <button class="btn-gold" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Request access</button>
-    <button class="btn-ghost" onclick="document.getElementById('flow').scrollIntoView({behavior:'smooth'})">See how it works</button>
+  <div class="hero-left">
+    <div class="hero-badge"><span class="badge-dot"></span> Fiat → Crypto Orchestration</div>
+    <h1>Payments that move<br>at the speed of <em>crypto</em></h1>
+    <p class="hero-sub">Orvix connects your business to global fiat payment rails and crypto liquidity in one unified API — built for iGaming, fintech, and Web3 operators who can't afford friction.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Request access →</button>
+      <button class="btn-secondary" onclick="document.getElementById('flow').scrollIntoView({behavior:'smooth'})">See how it works</button>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=900&auto=format&fit=crop&q=80" alt="Crypto fintech visualization" loading="eager">
+    <div class="hero-chip">
+      <div class="chip-label">Avg. settlement</div>
+      <div class="chip-val">~18ms ⚡</div>
+    </div>
+  </div>
+</div>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-label">Trusted alongside</div>
+  <div class="trust-logos">
+    <span class="trust-logo">pay.cc</span>
+    <span class="trust-logo">BridgerPay</span>
+    <span class="trust-logo">br-dge</span>
+    <span class="trust-logo">Praxies</span>
+    <span class="trust-logo">Fireblocks</span>
   </div>
 </div>
 
 <!-- STATS -->
-<div class="stats">
-  <div class="stat"><div class="stat-num">$2B+</div><div class="stat-label">Volume processed</div></div>
-  <div class="stat"><div class="stat-num">150+</div><div class="stat-label">Countries supported</div></div>
-  <div class="stat"><div class="stat-num">99.98%</div><div class="stat-label">Uptime SLA</div></div>
-  <div class="stat"><div class="stat-num">&lt;20ms</div><div class="stat-label">Avg. settlement</div></div>
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat"><div class="stat-num">$2B+</div><div class="stat-label">Volume processed</div></div>
+    <div class="stat"><div class="stat-num">150+</div><div class="stat-label">Countries</div></div>
+    <div class="stat"><div class="stat-num">99.98%</div><div class="stat-label">Uptime SLA</div></div>
+    <div class="stat"><div class="stat-num">&lt;20ms</div><div class="stat-label">Avg. settlement</div></div>
+  </div>
 </div>
 
-<!-- FIAT TO CRYPTO FLOW -->
-<div class="flow-wrap" id="flow">
+<!-- FLOW -->
+<div class="flow-section" id="flow">
   <div class="flow-inner">
-    <div class="section-tag"><span>The Process</span></div>
-    <h2>Fiat to Crypto —<br><em>seamlessly orchestrated</em></h2>
-    <p class="section-intro">One API call triggers the entire flow: from customer payment to crypto settlement, in real time.</p>
-    <div class="flow-diagram">
-      <div class="flow-node">
-        <div class="flow-node-icon">💳</div>
-        <div class="flow-node-label">Step 01</div>
-        <div class="flow-node-title">Fiat Payment</div>
-        <div class="flow-node-desc">Customer pays via card, bank transfer, or local method in their currency</div>
+    <div class="section-tag">How It Works</div>
+    <h2>Fiat to Crypto — <em>three steps</em></h2>
+    <p class="section-sub">One API call triggers the entire flow. From customer payment to crypto settlement, fully automated in real time.</p>
+    <div class="flow-steps">
+      <div class="flow-card">
+        <div class="flow-badge">Step 01</div>
+        <span class="flow-icon">💳</span>
+        <div class="flow-title">Fiat Payment</div>
+        <div class="flow-desc">Your customer pays in their local currency — card, bank transfer, or local method. We route across 50+ acquiring banks globally.</div>
         <div class="flow-tags"><span class="flow-tag">SEPA</span><span class="flow-tag">SWIFT</span><span class="flow-tag">Cards</span><span class="flow-tag">APMs</span></div>
       </div>
-      <div class="flow-arrow">
-        <div class="flow-arrow-line"></div>
-        <div class="flow-arrow-tip">›</div>
-        <div class="flow-arrow-label">Real-time</div>
+      <div class="flow-arr">
+        <div class="flow-arr-icon">›</div>
+        <div class="flow-arr-txt">Real-time</div>
       </div>
-      <div class="flow-node flow-center">
-        <div class="flow-center-badge">Orvix Engine</div>
-        <div class="flow-node-icon" style="margin-top:12px">⚙️</div>
-        <div class="flow-node-label">Step 02</div>
-        <div class="flow-node-title">Orchestration</div>
-        <div class="flow-node-desc">KYC/AML checks, FX conversion, smart routing, compliance — fully automated</div>
+      <div class="flow-card center">
+        <div class="flow-badge">Step 02</div>
+        <span class="flow-icon">⚙️</span>
+        <div class="flow-title">Orvix Orchestrates</div>
+        <div class="flow-desc">KYC/AML, FX conversion, smart routing, and compliance — fully automated in milliseconds. One integration, everything handled.</div>
         <div class="flow-tags"><span class="flow-tag">AML</span><span class="flow-tag">KYC</span><span class="flow-tag">FX</span><span class="flow-tag">MiCA</span></div>
       </div>
-      <div class="flow-arrow">
-        <div class="flow-arrow-line"></div>
-        <div class="flow-arrow-tip">›</div>
-        <div class="flow-arrow-label">Instant</div>
+      <div class="flow-arr">
+        <div class="flow-arr-icon">›</div>
+        <div class="flow-arr-txt">Instant</div>
       </div>
-      <div class="flow-node">
-        <div class="flow-node-icon">🪙</div>
-        <div class="flow-node-label">Step 03</div>
-        <div class="flow-node-title">Crypto Settlement</div>
-        <div class="flow-node-desc">Funds settle as BTC, ETH, USDC, or any asset — to wallet or exchange account</div>
+      <div class="flow-card">
+        <div class="flow-badge">Step 03</div>
+        <span class="flow-icon">🪙</span>
+        <div class="flow-title">Crypto Settlement</div>
+        <div class="flow-desc">Funds arrive as BTC, ETH, USDC, or any supported asset — to your wallet or your customer's. Seconds, not days.</div>
         <div class="flow-tags"><span class="flow-tag">BTC</span><span class="flow-tag">ETH</span><span class="flow-tag">USDC</span><span class="flow-tag">USDT</span></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- PROCESS STEPS -->
-<div style="background:var(--ink);border-bottom:1px solid var(--border)">
-  <div class="section">
-    <div class="section-tag"><span>Why Orvix</span></div>
-    <h2>Built for the complexity<br><em>you actually face</em></h2>
-    <div class="process-grid">
-      <div class="process-step">
-        <div class="ps-num">01</div>
-        <div class="ps-title">Multi-PSP Smart Routing</div>
-        <div class="ps-desc">Automatically route each transaction to the optimal payment provider based on cost, acceptance rate, and availability. No manual failover. No downtime.</div>
-      </div>
-      <div class="process-step">
-        <div class="ps-num">02</div>
-        <div class="ps-title">Compliance by Design</div>
-        <div class="ps-desc">AML screening, real-time KYC orchestration, and transaction monitoring — built to meet MiCA, FinCEN, and regional regulations globally. White-labeled for your brand.</div>
-      </div>
-      <div class="process-step">
-        <div class="ps-num">03</div>
-        <div class="ps-title">Deep Liquidity Access</div>
-        <div class="ps-desc">Best-execution crypto settlement across major venues. Smart order routing ensures the tightest spreads at the moment of conversion, at any volume.</div>
-      </div>
+<!-- WHY ORVIX -->
+<div class="how-wrap">
+  <div class="section-tag">Why Orvix</div>
+  <h2>Built for businesses that<br><em>can't afford downtime</em></h2>
+  <p class="section-sub">We don't sell you a gateway. We become your orchestration layer — so you focus on growth, not infrastructure.</p>
+  <div class="how-grid">
+    <div class="how-card">
+      <div class="how-num">01</div>
+      <div class="how-title">Multi-PSP Smart Routing</div>
+      <div class="how-desc">Every transaction routes automatically to the best provider based on cost, acceptance rate, and geography. When one fails, another takes over instantly.</div>
+    </div>
+    <div class="how-card">
+      <div class="how-num">02</div>
+      <div class="how-title">Compliance by Design</div>
+      <div class="how-desc">AML screening, KYC orchestration, and transaction monitoring built for MiCA, FinCEN, and regional regulations. Not bolted on — part of every transaction.</div>
+    </div>
+    <div class="how-card">
+      <div class="how-num">03</div>
+      <div class="how-title">Deep Liquidity Access</div>
+      <div class="how-desc">Best-execution crypto settlement across major venues. Smart order routing ensures tightest spreads at the exact moment of conversion — at any volume.</div>
     </div>
   </div>
 </div>
 
 <!-- IGAMING -->
-<div class="igaming-wrap" id="igaming">
-  <div class="section">
-    <div class="section-tag"><span>iGaming</span></div>
-    <h2>The orchestration layer<br><em>iGaming demands</em></h2>
-    <p class="section-intro">Online gaming platforms face unique payment challenges — high velocity, global players, regulatory complexity. Orvix is built for exactly this.</p>
-    <div class="igaming-grid">
-      <div class="igaming-card igaming-hero" style="grid-column:span 2;display:flex;gap:60px;align-items:center">
-        <div style="flex:1">
-          <div style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;margin-bottom:16px;line-height:1.2">iGaming processes <em style="color:var(--teal-light)">$100B+</em> annually — and players expect instant deposits and withdrawals</div>
-          <p style="font-size:14px;color:var(--muted);line-height:1.8">Orvix gives gaming operators a single integration to accept fiat globally, convert to crypto instantly, and pay players out in any currency — with full compliance baked in.</p>
-        </div>
-        <div style="display:flex;gap:40px;flex-shrink:0">
-          <div class="igaming-hero-stat" style="text-align:center">
-            <div class="igaming-hero-num">3s</div>
-            <div class="igaming-hero-label">Avg. deposit time</div>
-          </div>
-          <div class="igaming-hero-stat" style="text-align:center;border-right:none">
-            <div class="igaming-hero-num">50+</div>
-            <div class="igaming-hero-label">Currencies accepted</div>
-          </div>
+<div class="igaming-section" id="igaming">
+  <div class="igaming-inner">
+    <div class="section-tag">iGaming</div>
+    <div class="igaming-split">
+      <div>
+        <h2>The payment layer<br><em>iGaming demands</em></h2>
+        <p class="section-sub" style="margin-bottom:24px">Online gaming platforms deal with high velocity, global players, and tight regulation. Orvix is built for exactly this — fast deposits, instant withdrawals, full compliance.</p>
+        <div class="igaming-stats">
+          <div class="ig-stat"><div class="ig-stat-num">3s</div><div class="ig-stat-label">Avg. deposit</div></div>
+          <div class="ig-stat"><div class="ig-stat-num">50+</div><div class="ig-stat-label">Currencies</div></div>
+          <div class="ig-stat"><div class="ig-stat-num">99.99%</div><div class="ig-stat-label">Uptime</div></div>
         </div>
       </div>
-      <div class="igaming-card">
-        <div class="igaming-num">01</div>
-        <div class="igaming-title">Instant Player Deposits</div>
-        <div class="igaming-desc">Players fund accounts in their local currency via card, bank, or e-wallet. Orvix converts and credits crypto balances in under 3 seconds — zero friction at the cashier.</div>
-        <div class="igaming-tags"><span class="igaming-tag">Real-time</span><span class="igaming-tag">50+ currencies</span><span class="igaming-tag">Cards + APMs</span></div>
+      <div class="igaming-img">
+        <img src="https://images.unsplash.com/photo-1614680376408-81e91ffe3db7?w=800&auto=format&fit=crop&q=80" alt="iGaming payment technology">
       </div>
-      <div class="igaming-card">
-        <div class="igaming-num">02</div>
-        <div class="igaming-title">Crypto Withdrawals at Scale</div>
-        <div class="igaming-desc">Players withdraw winnings in BTC, ETH, USDC, or local fiat. Automated liquidity management means you never hold excess crypto risk on your balance sheet.</div>
-        <div class="igaming-tags"><span class="igaming-tag">BTC / ETH</span><span class="igaming-tag">USDC / USDT</span><span class="igaming-tag">Auto-hedging</span></div>
+    </div>
+    <div class="igaming-cards">
+      <div class="ig-card">
+        <div class="ig-icon">⚡</div>
+        <div class="ig-title">Instant Player Deposits</div>
+        <div class="ig-desc">Players fund accounts in their local currency. Orvix converts and credits crypto balances in under 3 seconds — zero friction at the cashier.</div>
+        <div class="ig-tags"><span class="ig-tag">Real-time</span><span class="ig-tag">50+ currencies</span><span class="ig-tag">Cards + APMs</span></div>
       </div>
-      <div class="igaming-card">
-        <div class="igaming-num">03</div>
-        <div class="igaming-title">Regulatory Compliance</div>
-        <div class="igaming-desc">Built-in KYC orchestration, AML screening, and transaction monitoring tuned for gaming risk profiles. MGA, UKGC, Curaçao — we know the regulations you operate under.</div>
-        <div class="igaming-tags"><span class="igaming-tag">MGA</span><span class="igaming-tag">UKGC</span><span class="igaming-tag">Curaçao</span><span class="igaming-tag">AML</span></div>
+      <div class="ig-card">
+        <div class="ig-icon">💸</div>
+        <div class="ig-title">Crypto Withdrawals at Scale</div>
+        <div class="ig-desc">Players withdraw in BTC, ETH, USDC, or local fiat. Automated liquidity management means zero excess crypto risk on your balance sheet.</div>
+        <div class="ig-tags"><span class="ig-tag">BTC / ETH</span><span class="ig-tag">USDC / USDT</span><span class="ig-tag">Auto-hedging</span></div>
       </div>
-      <div class="igaming-card">
-        <div class="igaming-num">04</div>
-        <div class="igaming-title">High-Volume Architecture</div>
-        <div class="igaming-desc">Designed for peak traffic — major sporting events, tournaments, jackpots. Our infrastructure scales elastically and maintains sub-second response at tens of thousands of TPS.</div>
-        <div class="igaming-tags"><span class="igaming-tag">Auto-scaling</span><span class="igaming-tag">99.99% uptime</span><span class="igaming-tag">Sub-second</span></div>
+      <div class="ig-card">
+        <div class="ig-icon">🛡️</div>
+        <div class="ig-title">Gaming-Specific Compliance</div>
+        <div class="ig-desc">KYC, AML, and transaction monitoring tuned for gaming risk profiles. MGA, UKGC, Curaçao — we know the regulations you operate under.</div>
+        <div class="ig-tags"><span class="ig-tag">MGA</span><span class="ig-tag">UKGC</span><span class="ig-tag">Curaçao</span></div>
+      </div>
+      <div class="ig-card">
+        <div class="ig-icon">📈</div>
+        <div class="ig-title">High-Volume Architecture</div>
+        <div class="ig-desc">Built for peak traffic — tournaments, jackpots, major events. Elastic infrastructure, sub-second response at tens of thousands of TPS.</div>
+        <div class="ig-tags"><span class="ig-tag">Auto-scaling</span><span class="ig-tag">Sub-second</span><span class="ig-tag">99.99% uptime</span></div>
       </div>
     </div>
   </div>
 </div>
 
 <!-- CONTACT -->
-<div class="contact-wrap" id="contact">
+<div class="contact-section" id="contact">
   <div class="contact-inner">
-    <div class="section-tag"><span>Contact</span></div>
-    <h2>Let's talk about<br><em>your use case</em></h2>
-    <div class="contact-grid">
-      <div class="contact-left">
-        <h3>We work with fintechs, iGaming operators, exchanges, and Web3 platforms globally.</h3>
-        <p>Whether you're processing $100K or $100M a month, our team will assess your needs and propose the right integration path — usually within 24 hours.</p>
-        <div class="contact-methods">
-          <a class="contact-method" href="mailto:hello@orvix.io">
-            <div class="cm-icon">✉</div>
-            <div class="cm-content">
-              <div class="cm-type">Email</div>
-              <div class="cm-label">hello@orvix.io</div>
-            </div>
-            <div class="cm-arrow">→</div>
-          </a>
-          <a class="contact-method" href="https://t.me/orvix" target="_blank">
-            <div class="cm-icon">✈</div>
-            <div class="cm-content">
-              <div class="cm-type">Telegram</div>
-              <div class="cm-label">@orvix</div>
-            </div>
-            <div class="cm-arrow">→</div>
-          </a>
-          <a class="contact-method" href="https://wa.me/orvix" target="_blank">
-            <div class="cm-icon">📱</div>
-            <div class="cm-content">
-              <div class="cm-type">WhatsApp</div>
-              <div class="cm-label">Message us directly</div>
-            </div>
-            <div class="cm-arrow">→</div>
-          </a>
+    <div class="contact-left">
+      <div class="section-tag">Get in touch</div>
+      <h2 style="color:white">Talk to us about<br><em>your use case</em></h2>
+      <p class="section-sub">Whether you're processing $100K or $100M monthly, our team will assess your setup and propose the right integration — usually within 24 hours.</p>
+      <div class="contact-info">
+        <a class="contact-email-block" href="mailto:hello@orvix.io">
+          <div class="ce-icon">✉️</div>
+          <div>
+            <div class="ce-type">Email us directly</div>
+            <div class="ce-label">hello@orvix.io</div>
+          </div>
+          <div class="ce-arrow">→</div>
+        </a>
+        <div class="contact-promise">
+          <div class="cp-title">⏱ We respond within 24 hours</div>
+          <div class="cp-desc">Tell us about your business and volume. We'll come back with a tailored integration plan — no sales pressure, just honest advice.</div>
         </div>
       </div>
-      <div class="contact-form">
-        <div class="form-title">Request access</div>
-        <div class="form-sub">Sandbox access granted within 24 hours</div>
-        <div class="fg-row">
-          <div class="fg"><label>First name</label><input type="text" placeholder="John"></div>
-          <div class="fg"><label>Last name</label><input type="text" placeholder="Smith"></div>
-        </div>
-        <div class="fg"><label>Business email</label><input type="email" placeholder="you@company.com"></div>
-        <div class="fg"><label>Company</label><input type="text" placeholder="Acme Ltd."></div>
-        <div class="fg"><label>Business type</label>
-          <select>
-            <option value="">Select type</option>
-            <option>iGaming / Online Casino</option>
-            <option>Crypto Exchange</option>
-            <option>Neobank / Fintech</option>
-            <option>Payment Service Provider</option>
-            <option>Web3 / DeFi Platform</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div class="fg"><label>Monthly volume</label>
-          <select>
-            <option value="">Select range</option>
-            <option>Under $100K</option>
-            <option>$100K – $1M</option>
-            <option>$1M – $10M</option>
-            <option>$10M+</option>
-          </select>
-        </div>
-        <div class="fg"><label>Tell us about your use case</label><textarea placeholder="Brief description of your payment flows and requirements..."></textarea></div>
-        <button class="submit" onclick="this.textContent='✓ Submitted — we\'ll be in touch within 24h';this.style.background='#1A9E82';this.style.color='white'">Submit application</button>
+    </div>
+    <div class="contact-form">
+      <div class="form-title">Request access</div>
+      <div class="form-sub">Sandbox access within 24 hours — no credit card required</div>
+      <div class="fg-row">
+        <div class="fg"><label>First name</label><input type="text" placeholder="John"></div>
+        <div class="fg"><label>Last name</label><input type="text" placeholder="Smith"></div>
       </div>
+      <div class="fg"><label>Business email</label><input type="email" placeholder="you@company.com"></div>
+      <div class="fg"><label>Company</label><input type="text" placeholder="Acme Ltd."></div>
+      <div class="fg"><label>Business type</label>
+        <select>
+          <option value="">Select your type</option>
+          <option>iGaming / Online Casino</option>
+          <option>Crypto Exchange</option>
+          <option>Neobank / Fintech</option>
+          <option>Payment Service Provider</option>
+          <option>Web3 / DeFi Platform</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="fg"><label>Monthly volume</label>
+        <select>
+          <option value="">Select range</option>
+          <option>Under $100K</option>
+          <option>$100K – $1M</option>
+          <option>$1M – $10M</option>
+          <option>$10M+</option>
+        </select>
+      </div>
+      <div class="fg"><label>Tell us about your needs</label><textarea placeholder="Brief description of your payment flows and requirements..."></textarea></div>
+      <button class="submit-btn" onclick="this.textContent='✓ Submitted — we\'ll be in touch within 24h';this.style.background='#0c8f6b'">Submit →</button>
     </div>
   </div>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-logo">Orv<span>ix</span></div>
   <ul class="footer-links">
