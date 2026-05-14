@@ -109,9 +109,27 @@ h2 em{font-style:italic;color:var(--teal)}
 .igaming-section{background:white;padding:100px 60px}
 .igaming-inner{max-width:1200px;margin:0 auto}
 .igaming-split{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;margin-bottom:48px}
-.igaming-img{border-radius:16px;overflow:hidden;height:320px;position:relative}
-.igaming-img img{width:100%;height:100%;object-fit:cover}
-.igaming-img::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(14,162,122,0.18),transparent)}
+.igaming-img{border-radius:20px;overflow:hidden;height:360px;position:relative;background:#0a1628}
+.igaming-img img{display:none}
+.igaming-img::after{display:none}
+/* widget canvas */
+#igCanvas{position:absolute;inset:0;width:100%;height:100%}
+.ig-widget{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;z-index:2;padding:24px}
+.ig-flow-row{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.ig-node{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:14px;padding:14px 18px;text-align:center;min-width:100px;backdrop-filter:blur(8px);transition:all 0.3s}
+.ig-node.active{border-color:rgba(14,162,122,0.6);background:rgba(14,162,122,0.12);box-shadow:0 0 20px rgba(14,162,122,0.2)}
+.ig-node-icon{font-size:22px;margin-bottom:4px}
+.ig-node-label{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.5)}
+.ig-node-val{font-size:13px;font-weight:600;color:white;margin-top:2px}
+.ig-arrow{color:rgba(14,162,122,0.7);font-size:20px;position:relative}
+.ig-pulse-dot{position:absolute;width:8px;height:8px;border-radius:50%;background:var(--teal-light);top:50%;transform:translateY(-50%);animation:moveDot 2s linear infinite}
+@keyframes moveDot{0%{left:-4px;opacity:0}10%{opacity:1}90%{opacity:1}100%{left:calc(100% - 4px);opacity:0}}
+.ig-ticker{display:flex;flex-direction:column;gap:6px;width:100%;max-width:340px;margin-top:12px}
+.ig-tick{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:8px 14px;font-size:12px;animation:fadeSlideIn 0.4s ease both}
+@keyframes fadeSlideIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.ig-tick-left{color:rgba(255,255,255,0.5)}
+.ig-tick-right{color:var(--teal-light);font-weight:600}
+.ig-tick-badge{font-size:9px;padding:2px 8px;border-radius:10px;background:rgba(14,162,122,0.15);border:1px solid rgba(14,162,122,0.25);color:var(--teal-light);margin-left:8px}
 .igaming-stats{display:flex;margin-top:24px;border:1px solid var(--border);border-radius:12px;overflow:hidden}
 .ig-stat{flex:1;padding:16px 20px;border-right:1px solid var(--border);text-align:center}
 .ig-stat:last-child{border-right:none}
@@ -362,7 +380,117 @@ function closeMenu(){
         </div>
       </div>
       <div class="igaming-img">
-        <img src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?w=800&auto=format&fit=crop&q=80" alt="iGaming payment technology">
+        <canvas id="igCanvas"></canvas>
+        <div class="ig-widget">
+          <div class="ig-flow-row">
+            <div class="ig-node" id="igNode1">
+              <div class="ig-node-icon">💳</div>
+              <div class="ig-node-label">Fiat In</div>
+              <div class="ig-node-val" id="igVal1">€250.00</div>
+            </div>
+            <div class="ig-arrow" style="width:48px;position:relative">
+              <div class="ig-pulse-dot" style="animation-delay:0s"></div>
+              ›
+            </div>
+            <div class="ig-node" id="igNode2">
+              <div class="ig-node-icon">⚙️</div>
+              <div class="ig-node-label">Orvix</div>
+              <div class="ig-node-val">Orchestrating</div>
+            </div>
+            <div class="ig-arrow" style="width:48px;position:relative">
+              <div class="ig-pulse-dot" style="animation-delay:1s"></div>
+              ›
+            </div>
+            <div class="ig-node" id="igNode3">
+              <div class="ig-node-icon">🪙</div>
+              <div class="ig-node-label">Crypto Out</div>
+              <div class="ig-node-val" id="igVal3">0.0041 BTC</div>
+            </div>
+          </div>
+          <div class="ig-ticker" id="igTicker"></div>
+        </div>
+        <script>
+        (function(){
+          // Canvas particle background
+          const canvas = document.getElementById('igCanvas');
+          const ctx = canvas.getContext('2d');
+          let W, H, particles=[];
+          function resize(){
+            W=canvas.width=canvas.offsetWidth;
+            H=canvas.height=canvas.offsetHeight;
+          }
+          resize();
+          window.addEventListener('resize',resize);
+          for(let i=0;i<60;i++){
+            particles.push({
+              x:Math.random()*800,y:Math.random()*360,
+              vx:(Math.random()-0.5)*0.3,vy:(Math.random()-0.5)*0.3,
+              r:Math.random()*1.5+0.5,o:Math.random()*0.4+0.1
+            });
+          }
+          function drawParticles(){
+            ctx.clearRect(0,0,W,H);
+            // deep gradient bg
+            const g=ctx.createRadialGradient(W*0.5,H*0.4,0,W*0.5,H*0.4,W*0.7);
+            g.addColorStop(0,'rgba(14,162,122,0.08)');
+            g.addColorStop(1,'rgba(10,22,40,0)');
+            ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+            // grid lines
+            ctx.strokeStyle='rgba(255,255,255,0.04)';ctx.lineWidth=1;
+            for(let x=0;x<W;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}
+            for(let y=0;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
+            // particles + connections
+            particles.forEach(p=>{
+              p.x+=p.vx;p.y+=p.vy;
+              if(p.x<0||p.x>W)p.vx*=-1;
+              if(p.y<0||p.y>H)p.vy*=-1;
+              ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+              ctx.fillStyle=`rgba(14,162,122,${p.o})`;ctx.fill();
+            });
+            particles.forEach((a,i)=>{
+              particles.slice(i+1).forEach(b=>{
+                const d=Math.hypot(a.x-b.x,a.y-b.y);
+                if(d<80){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
+                  ctx.strokeStyle=`rgba(14,162,122,${0.12*(1-d/80)})`;ctx.lineWidth=1;ctx.stroke();}
+              });
+            });
+            requestAnimationFrame(drawParticles);
+          }
+          drawParticles();
+
+          // Ticker feed
+          const txns=[
+            {from:'€500 EUR',to:'0.0082 BTC',ms:'12ms',country:'🇩🇪'},
+            {from:'£320 GBP',to:'368 USDC',ms:'9ms',country:'🇬🇧'},
+            {from:'$1,200 USD',to:'0.0196 ETH',ms:'18ms',country:'🇺🇸'},
+            {from:'₪800 ILS',to:'210 USDT',ms:'11ms',country:'🇮🇱'},
+            {from:'€250 EUR',to:'0.0041 BTC',ms:'14ms',country:'🇫🇷'},
+            {from:'$750 USD',to:'750 USDC',ms:'7ms',country:'🇨🇦'},
+            {from:'A$400',to:'0.0052 BTC',ms:'16ms',country:'🇦🇺'},
+          ];
+          const ticker=document.getElementById('igTicker');
+          let idx=0;
+          function addTick(){
+            const t=txns[idx%txns.length];idx++;
+            const el=document.createElement('div');
+            el.className='ig-tick';
+            el.innerHTML=`<span class="ig-tick-left">${t.country} ${t.from}</span><span><span class="ig-tick-right">${t.to}</span><span class="ig-tick-badge">${t.ms}</span></span>`;
+            el.style.animationDelay='0s';
+            ticker.insertBefore(el,ticker.firstChild);
+            if(ticker.children.length>3)ticker.removeChild(ticker.lastChild);
+          }
+          addTick();
+          setInterval(addTick,1800);
+
+          // Pulse nodes
+          const nodes=[document.getElementById('igNode1'),document.getElementById('igNode2'),document.getElementById('igNode3')];
+          let ni=0;
+          setInterval(()=>{
+            nodes.forEach(n=>n.classList.remove('active'));
+            nodes[ni%3].classList.add('active');ni++;
+          },800);
+        })();
+        </script>
       </div>
     </div>
     <div class="igaming-cards">
