@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --navy:#040C1A;--navy2:#071428;--teal:#00D4AA;--teal2:#00F5C4;
+    --gold:#FFB547;--white:#F5F7FA;--muted:#8899AA;
+    --card-bg:rgba(255,255,255,0.04);--border:rgba(0,212,170,0.15);
+  }
+  html{scroll-behavior:smooth}
+  body{background:var(--navy);color:var(--white);font-family:'DM Sans',sans-serif;overflow-x:hidden}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 48px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(0,212,170,0.08);background:rgba(4,12,26,0.85);backdrop-filter:blur(12px)}
+  .logo{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;letter-spacing:-0.5px;color:var(--white)}
+  .logo span{color:var(--teal)}
+  .nav-links{display:flex;gap:32px;list-style:none}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;transition:color 0.2s}
+  .nav-links a:hover{color:var(--teal)}
+  .nav-cta{background:var(--teal);color:var(--navy);padding:10px 24px;border-radius:8px;font-weight:600;font-size:14px;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+  .nav-cta:hover{background:var(--teal2);transform:translateY(-1px)}
+
+  /* HERO */
+  .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 48px 80px;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;top:-40%;left:-20%;width:140%;height:140%;background:radial-gradient(ellipse at 50% 40%,rgba(0,212,170,0.07) 0%,transparent 65%);pointer-events:none}
+  .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.25);border-radius:20px;padding:6px 16px;font-size:12px;color:var(--teal);font-weight:500;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:32px}
+  .badge-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+  h1{font-family:'Syne',sans-serif;font-size:clamp(42px,6vw,80px);font-weight:800;line-height:1.05;letter-spacing:-2px;margin-bottom:24px;max-width:900px}
+  h1 .accent{color:var(--teal)}
+  h1 .accent2{color:var(--gold)}
+  .hero-sub{font-size:18px;color:var(--muted);max-width:560px;line-height:1.7;margin-bottom:48px}
+  .hero-actions{display:flex;gap:16px;align-items:center;flex-wrap:wrap;justify-content:center}
+  .btn-primary{background:var(--teal);color:var(--navy);padding:14px 32px;border-radius:10px;font-weight:700;font-size:16px;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+  .btn-primary:hover{background:var(--teal2);transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,212,170,0.25)}
+  .btn-outline{background:transparent;color:var(--white);padding:14px 32px;border-radius:10px;font-weight:500;font-size:16px;cursor:pointer;border:1px solid rgba(255,255,255,0.2);font-family:'DM Sans',sans-serif;transition:all 0.2s}
+  .btn-outline:hover{border-color:var(--teal);color:var(--teal)}
+
+  /* STATS BAR */
+  .stats-bar{background:rgba(255,255,255,0.03);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:28px 48px;display:grid;grid-template-columns:repeat(4,1fr);text-align:center;gap:16px}
+  .stat-num{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:var(--teal)}
+  .stat-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-top:4px}
+
+  /* SECTION */
+  section{padding:100px 48px;max-width:1200px;margin:0 auto}
+  .section-tag{font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--teal);font-weight:600;margin-bottom:16px}
+  h2{font-family:'Syne',sans-serif;font-size:clamp(28px,3.5vw,48px);font-weight:800;letter-spacing:-1px;margin-bottom:16px;line-height:1.1}
+  .section-sub{font-size:16px;color:var(--muted);max-width:560px;line-height:1.7;margin-bottom:64px}
+
+  /* HOW IT WORKS */
+  .how-wrap{width:100%;padding:100px 48px;background:var(--navy2)}
+  .how-inner{max-width:1200px;margin:0 auto}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:60px}
+  .step{background:var(--card-bg);border:1px solid var(--border);padding:40px 32px;position:relative}
+  .step:first-child{border-radius:12px 0 0 12px}
+  .step:last-child{border-radius:0 12px 12px 0}
+  .step-num{font-family:'Syne',sans-serif;font-size:56px;font-weight:800;color:rgba(0,212,170,0.12);line-height:1;margin-bottom:24px}
+  .step-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;margin-bottom:12px}
+  .step-desc{font-size:14px;color:var(--muted);line-height:1.7}
+  .step-icon{width:44px;height:44px;border-radius:10px;background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:20px}
+
+  /* SERVICES GRID */
+  .services-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .service-card{background:var(--card-bg);border:1px solid var(--border);border-radius:16px;padding:36px;transition:all 0.25s;cursor:default}
+  .service-card:hover{border-color:rgba(0,212,170,0.4);background:rgba(0,212,170,0.04);transform:translateY(-3px)}
+  .service-card.featured{grid-column:span 2;display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center;background:linear-gradient(135deg,rgba(0,212,170,0.08),rgba(0,212,170,0.02));border-color:rgba(0,212,170,0.3)}
+  .service-icon{width:52px;height:52px;border-radius:14px;background:rgba(0,212,170,0.12);border:1px solid rgba(0,212,170,0.2);display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:20px}
+  .service-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;margin-bottom:10px}
+  .service-desc{font-size:14px;color:var(--muted);line-height:1.7}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .tag{font-size:11px;padding:4px 12px;border-radius:20px;background:rgba(0,212,170,0.1);color:var(--teal);border:1px solid rgba(0,212,170,0.2);font-weight:500;letter-spacing:0.3px}
+
+  /* ONBOARDING */
+  .onboard-wrap{width:100%;padding:100px 48px;background:rgba(0,212,170,0.03);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .onboard-inner{max-width:1200px;margin:0 auto}
+  .onboard-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;margin-top:64px}
+  .onboard-steps{display:flex;flex-direction:column;gap:0}
+  .ob-step{display:flex;gap:20px;padding:24px 0;border-bottom:1px solid rgba(255,255,255,0.06)}
+  .ob-step:last-child{border-bottom:none}
+  .ob-circle{min-width:36px;height:36px;border-radius:50%;background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--teal)}
+  .ob-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:6px}
+  .ob-desc{font-size:13px;color:var(--muted);line-height:1.6}
+  .onboard-form{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:20px;padding:40px}
+  .form-title{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;margin-bottom:8px}
+  .form-sub{font-size:14px;color:var(--muted);margin-bottom:28px}
+  .form-group{margin-bottom:16px}
+  .form-group label{display:block;font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);margin-bottom:8px;font-weight:500}
+  .form-group input,.form-group select{width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:12px 16px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border 0.2s}
+  .form-group input:focus,.form-group select:focus{border-color:var(--teal)}
+  .form-group select option{background:var(--navy);color:var(--white)}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .submit-btn{width:100%;background:var(--teal);color:var(--navy);padding:14px;border-radius:10px;font-weight:700;font-size:16px;cursor:pointer;border:none;font-family:'Syne',sans-serif;transition:all 0.2s;margin-top:8px}
+  .submit-btn:hover{background:var(--teal2)}
+
+  /* LOGOS */
+  .logos-wrap{width:100%;padding:60px 48px;background:var(--navy2);border-bottom:1px solid var(--border)}
+  .logos-inner{max-width:1200px;margin:0 auto;text-align:center}
+  .logos-label{font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:32px}
+  .logos-row{display:flex;gap:48px;align-items:center;justify-content:center;flex-wrap:wrap}
+  .logo-pill{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:rgba(255,255,255,0.25);letter-spacing:-0.5px;transition:color 0.2s;cursor:default}
+  .logo-pill:hover{color:rgba(255,255,255,0.5)}
+
+  /* CTA */
+  .cta-wrap{width:100%;padding:120px 48px;text-align:center}
+  .cta-inner{max-width:700px;margin:0 auto}
+  .cta-inner h2{font-size:clamp(36px,5vw,64px);letter-spacing:-2px;margin-bottom:20px}
+  .cta-inner p{color:var(--muted);font-size:18px;margin-bottom:40px}
+
+  /* FOOTER */
+  footer{border-top:1px solid var(--border);padding:40px 48px;display:flex;align-items:center;justify-content:space-between;background:var(--navy2)}
+  .footer-links{display:flex;gap:32px;list-style:none}
+  .footer-links a{color:var(--muted);text-decoration:none;font-size:13px;transition:color 0.2s}
+  .footer-links a:hover{color:var(--teal)}
+  .footer-copy{font-size:13px;color:rgba(255,255,255,0.25)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Orv<span>ix</span></div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#onboard">Get started</a></li>
+    <li><a href="#">Docs</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('onboard').scrollIntoView({behavior:'smooth'})">Start onboarding</button>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge"><span class="badge-dot"></span> Fiat → Crypto Orchestration Layer</div>
+  <h1>The <span class="accent">payment rails</span> your<br>crypto business <span class="accent2">deserves</span></h1>
+  <p class="hero-sub">Orvix orchestrates seamless fiat-to-crypto flows — connecting payment providers, compliance engines, and liquidity in one unified API.</p>
+  <div class="hero-actions">
+    <button class="btn-primary" onclick="document.getElementById('onboard').scrollIntoView({behavior:'smooth'})">Start for free →</button>
+    <button class="btn-outline" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">See how it works</button>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div><div class="stat-num">$2B+</div><div class="stat-label">Volume processed</div></div>
+  <div><div class="stat-num">150+</div><div class="stat-label">Countries supported</div></div>
+  <div><div class="stat-num">99.98%</div><div class="stat-label">Uptime SLA</div></div>
+  <div><div class="stat-num">24ms</div><div class="stat-label">Avg. settlement time</div></div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="how-wrap" id="how">
+  <div class="how-inner">
+    <div class="section-tag">How it works</div>
+    <h2>From fiat to crypto<br>in three steps</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-icon">💳</div>
+        <div class="step-title">Accept fiat payment</div>
+        <div class="step-desc">Your customer pays with card, bank transfer, or local methods. We handle the routing intelligently across 50+ acquiring banks globally.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-icon">⚙️</div>
+        <div class="step-title">Orvix orchestrates</div>
+        <div class="step-desc">Our engine handles KYC/AML checks, FX conversion, liquidity sourcing, and compliance — all in real time, fully automated.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-icon">🪙</div>
+        <div class="step-title">Settle in crypto</div>
+        <div class="step-desc">Funds arrive as BTC, ETH, USDC, or any supported asset — to your wallet or your customer's. Settlement in seconds, not days.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-tag">Services</div>
+  <h2>Everything you need<br>to go global</h2>
+  <p class="section-sub">One API. Infinite orchestration. Built for fintechs, exchanges, neobanks, and Web3 platforms.</p>
+  <div class="services-grid">
+    <div class="service-card featured">
+      <div>
+        <div class="service-icon">🔄</div>
+        <div class="service-title">Fiat ↔ Crypto Orchestration</div>
+        <div class="service-desc">Our core product. Route payments intelligently across providers, optimize for cost and speed, and settle globally — with full audit trails and compliance built in. Works with SEPA, SWIFT, Faster Payments, and more.</div>
+        <div class="tags"><span class="tag">SEPA</span><span class="tag">SWIFT</span><span class="tag">USDC</span><span class="tag">BTC</span><span class="tag">ETH</span><span class="tag">Real-time FX</span></div>
+      </div>
+      <div style="background:rgba(0,212,170,0.06);border:1px solid rgba(0,212,170,0.15);border-radius:12px;padding:24px;font-family:monospace;font-size:12px;color:rgba(0,212,170,0.8);line-height:1.8">
+        POST /v1/orchestrate<br>
+        {<br>
+        &nbsp;&nbsp;"amount": 5000,<br>
+        &nbsp;&nbsp;"currency": "EUR",<br>
+        &nbsp;&nbsp;"settle_as": "USDC",<br>
+        &nbsp;&nbsp;"network": "polygon",<br>
+        &nbsp;&nbsp;"kyc_verified": true<br>
+        }<br><br>
+        <span style="color:#00D4AA">→ 200 OK · settled in 18ms</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🛡️</div>
+      <div class="service-title">Compliance Engine</div>
+      <div class="service-desc">AML screening, KYC orchestration, transaction monitoring, and SAR filing — built to meet MiCA, FinCEN, and global standards. White-labeled for your brand.</div>
+      <div class="tags"><span class="tag">MiCA</span><span class="tag">AML</span><span class="tag">KYC</span></div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">💹</div>
+      <div class="service-title">Liquidity Management</div>
+      <div class="service-desc">Access deep liquidity pools across major exchanges. Smart order routing ensures best execution price at the time of conversion, every time.</div>
+      <div class="tags"><span class="tag">Best execution</span><span class="tag">Multi-venue</span></div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📊</div>
+      <div class="service-title">Analytics & Reporting</div>
+      <div class="service-desc">Real-time dashboards, reconciliation reports, and API logs. Everything your finance team needs, delivered automatically in the format you choose.</div>
+      <div class="tags"><span class="tag">Real-time</span><span class="tag">CSV / API</span></div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🔌</div>
+      <div class="service-title">Smart Routing</div>
+      <div class="service-desc">Automatically select the lowest-cost, highest-availability payment provider per transaction. No more manual failover. No more downtime.</div>
+      <div class="tags"><span class="tag">Failover</span><span class="tag">Multi-PSP</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGOS -->
+<div class="logos-wrap">
+  <div class="logos-inner">
+    <div class="logos-label">Trusted alongside industry leaders</div>
+    <div class="logos-row">
+      <div class="logo-pill">pay.cc</div>
+      <div class="logo-pill">BridgerPay</div>
+      <div class="logo-pill">br-dge</div>
+      <div class="logo-pill">Praxies</div>
+      <div class="logo-pill">Stripe</div>
+      <div class="logo-pill">Fireblocks</div>
+    </div>
+  </div>
+</div>
+
+<!-- ONBOARDING -->
+<div class="onboard-wrap" id="onboard">
+  <div class="onboard-inner">
+    <div class="section-tag">Get started</div>
+    <h2>Onboard in minutes,<br>not months</h2>
+    <div class="onboard-grid">
+      <div class="onboard-steps">
+        <div class="ob-step">
+          <div class="ob-circle">1</div>
+          <div>
+            <div class="ob-title">Submit your details</div>
+            <div class="ob-desc">Tell us about your business, volume, and use case. Takes 3 minutes.</div>
+          </div>
+        </div>
+        <div class="ob-step">
+          <div class="ob-circle">2</div>
+          <div>
+            <div class="ob-title">Get sandbox access</div>
+            <div class="ob-desc">Instant API keys and a full sandbox environment to test your integration.</div>
+          </div>
+        </div>
+        <div class="ob-step">
+          <div class="ob-circle">3</div>
+          <div>
+            <div class="ob-title">KYB review (24-48h)</div>
+            <div class="ob-desc">Our compliance team reviews your business. Fast-track available for licensed entities.</div>
+          </div>
+        </div>
+        <div class="ob-step">
+          <div class="ob-circle">4</div>
+          <div>
+            <div class="ob-title">Go live</div>
+            <div class="ob-desc">Flip the switch. Your first transaction usually runs within the same week.</div>
+          </div>
+        </div>
+      </div>
+      <div class="onboard-form">
+        <div class="form-title">Start your application</div>
+        <div class="form-sub">Free sandbox — no credit card required</div>
+        <div class="form-row">
+          <div class="form-group"><label>First name</label><input type="text" placeholder="John"></div>
+          <div class="form-group"><label>Last name</label><input type="text" placeholder="Smith"></div>
+        </div>
+        <div class="form-group"><label>Business email</label><input type="email" placeholder="you@company.com"></div>
+        <div class="form-group"><label>Company name</label><input type="text" placeholder="Acme Inc."></div>
+        <div class="form-group"><label>Business type</label>
+          <select>
+            <option value="">Select your type</option>
+            <option>Crypto Exchange</option>
+            <option>Neobank / Fintech</option>
+            <option>Payment Service Provider</option>
+            <option>Web3 / DeFi Platform</option>
+            <option>E-commerce</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Monthly volume (USD)</label>
+          <select>
+            <option value="">Estimated monthly volume</option>
+            <option>Under $100K</option>
+            <option>$100K – $1M</option>
+            <option>$1M – $10M</option>
+            <option>$10M+</option>
+          </select>
+        </div>
+        <button class="submit-btn" onclick="this.textContent='✓ Application submitted!';this.style.background='#00D4AA'">Get sandbox access →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FINAL CTA -->
+<div class="cta-wrap">
+  <div class="cta-inner">
+    <div class="section-tag">Ready?</div>
+    <h2>Build the future<br>of <span style="color:var(--teal)">money movement</span></h2>
+    <p>Join the fintechs and exchanges using Orvix to move value across the fiat-crypto boundary — at scale, with confidence.</p>
+    <button class="btn-primary" onclick="document.getElementById('onboard').scrollIntoView({behavior:'smooth'})">Get started free →</button>
+  </div>
+</div>
+
+<footer>
+  <div class="logo" style="font-family:'Syne',sans-serif;font-size:18px;font-weight:800">Orv<span style="color:var(--teal)">ix</span></div>
+  <ul class="footer-links">
+    <li><a href="#">Docs</a></li>
+    <li><a href="#">Privacy</a></li>
+    <li><a href="#">Terms</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+  <div class="footer-copy">© 2025 Orvix. All rights reserved.</div>
+</footer>
+
+</body>
+</html>
