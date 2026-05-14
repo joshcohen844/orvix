@@ -3,135 +3,188 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Orvix — Solutions</title>
+<title>Orvix — Fiat to Crypto Orchestration</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Fraunces:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#F8F7F4;--ink:#0D1117;--ink2:#1C2333;
-  --mid:#4A5568;--muted:#8896A5;
-  --teal:#0EA27A;--teal-light:#12C994;--teal-pale:#E8F8F3;
-  --border:#E2E8F0;--border-dark:#CBD5E0;
+  --bg:#F8F7F4;--white:#FFFFFF;--ink:#0D1117;--ink2:#1C2333;
+  --mid:#4A5568;--muted:#8896A5;--teal:#0EA27A;--teal-light:#12C994;
+  --teal-pale:#E8F8F3;--border:#E2E8F0;--border-dark:#CBD5E0;
   --dark:#0D1117;--dark2:#141B2D;
 }
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;overflow-x:hidden;line-height:1.6}
+body{background:var(--bg);color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;font-weight:400;overflow-x:hidden;line-height:1.6}
 
-/* NAV */
+/* ── SCROLL REVEAL ── */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-left{opacity:0;transform:translateX(-32px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal-left.visible{opacity:1;transform:translateX(0)}
+.reveal-right{opacity:0;transform:translateX(32px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal-right.visible{opacity:1;transform:translateX(0)}
+.reveal-scale{opacity:0;transform:scale(0.94);transition:opacity 0.6s ease,transform 0.6s ease}
+.reveal-scale.visible{opacity:1;transform:scale(1)}
+.delay-1{transition-delay:0.1s}.delay-2{transition-delay:0.2s}.delay-3{transition-delay:0.3s}
+.delay-4{transition-delay:0.4s}.delay-5{transition-delay:0.5s}
+
+/* ── NAV ── */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 60px;height:72px;display:flex;align-items:center;justify-content:space-between;background:rgba(248,247,244,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);box-shadow:0 2px 24px rgba(0,0,0,0.06)}
 .logo{font-size:22px;font-weight:700;color:var(--ink);letter-spacing:-0.5px;text-decoration:none}
 .logo span{color:var(--teal)}
 .nav-links{display:flex;gap:32px;list-style:none}
 .nav-links a{color:var(--mid);text-decoration:none;font-size:14px;font-weight:500;transition:color 0.2s}
-.nav-links a:hover,.nav-links a.active{color:var(--ink)}
-.nav-cta{background:var(--teal);color:white;padding:10px 24px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;border:none;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.2s;text-decoration:none}
+.nav-links a:hover{color:var(--ink)}
+.nav-cta{background:var(--teal);color:white;padding:10px 24px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;border:none;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.2s}
 .nav-cta:hover{background:var(--teal-light)}
 .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
 .hamburger span{width:22px;height:2px;background:var(--ink);border-radius:2px;display:block;transition:all 0.3s}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 .mobile-nav{display:none;position:fixed;top:72px;left:0;right:0;z-index:99;background:white;border-bottom:1px solid var(--border);padding:16px 24px;flex-direction:column}
 .mobile-nav.open{display:flex}
 .mobile-nav a{color:var(--mid);text-decoration:none;font-size:16px;font-weight:500;padding:14px 0;border-bottom:1px solid var(--border);display:block}
 .mobile-nav .mob-cta{margin-top:12px;background:var(--teal);color:white;text-align:center;border-radius:10px;padding:14px;font-weight:600;border-bottom:none}
 
-/* HERO */
-.page-hero{padding:160px 60px 100px;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
-.page-hero-tag{display:inline-flex;align-items:center;gap:6px;background:var(--teal-pale);border-radius:4px;padding:4px 12px;font-size:11px;font-weight:600;color:var(--teal);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:20px}
-.page-hero h1{font-family:'Fraunces',serif;font-size:clamp(36px,4vw,58px);font-weight:300;line-height:1.1;letter-spacing:-1.5px;margin-bottom:20px}
-.page-hero h1 em{font-style:italic;color:var(--teal)}
-.page-hero-sub{font-size:17px;color:var(--mid);line-height:1.8;margin-bottom:36px}
-.page-hero-actions{display:flex;gap:12px;flex-wrap:wrap}
-.btn-primary{background:var(--teal);color:white;padding:13px 28px;border-radius:10px;font-weight:600;font-size:15px;cursor:pointer;border:none;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.2s;text-decoration:none;display:inline-block}
+/* ── HERO ── */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding-top:72px;position:relative}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 20% 50%,rgba(14,162,122,0.04),transparent 70%);pointer-events:none}
+.hero-left{padding:80px 60px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--teal-pale);border:1px solid rgba(14,162,122,0.2);border-radius:20px;padding:6px 14px;font-size:12px;color:var(--teal);font-weight:600;margin-bottom:28px}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+h1{font-family:'Fraunces',serif;font-size:clamp(36px,4.5vw,62px);font-weight:300;line-height:1.1;letter-spacing:-1.5px;color:var(--ink);margin-bottom:24px}
+h1 em{font-style:italic;color:var(--teal)}
+.hero-sub{font-size:17px;color:var(--mid);line-height:1.8;margin-bottom:40px;max-width:480px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn-primary{background:var(--teal);color:white;padding:14px 32px;border-radius:10px;font-weight:600;font-size:15px;cursor:pointer;border:none;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.2s}
 .btn-primary:hover{background:var(--teal-light);transform:translateY(-2px);box-shadow:0 8px 24px rgba(14,162,122,0.25)}
-.btn-ghost{background:transparent;color:var(--ink);padding:13px 28px;border-radius:10px;font-weight:500;font-size:15px;cursor:pointer;border:1.5px solid var(--border-dark);font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.2s;text-decoration:none;display:inline-block}
-.btn-ghost:hover{border-color:var(--teal);color:var(--teal)}
-.hero-cards{display:flex;flex-direction:column;gap:12px}
-.hero-mini-card{background:white;border:1px solid var(--border);border-radius:14px;padding:18px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 2px 12px rgba(0,0,0,0.04);transition:all 0.25s}
-.hero-mini-card:hover{transform:translateX(4px);border-color:var(--teal);box-shadow:0 4px 20px rgba(14,162,122,0.1)}
-.hmc-icon{width:38px;height:38px;border-radius:10px;background:var(--teal-pale);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.hmc-title{font-size:14px;font-weight:600;color:var(--ink)}
-.hmc-sub{font-size:12px;color:var(--muted)}
+.btn-secondary{background:transparent;color:var(--ink);padding:14px 32px;border-radius:10px;font-weight:500;font-size:15px;cursor:pointer;border:1.5px solid var(--border-dark);font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.2s}
+.btn-secondary:hover{border-color:var(--teal);color:var(--teal)}
+.hero-right{height:100vh;position:relative;overflow:hidden}
+.hero-right img{width:100%;height:100%;object-fit:cover}
+.hero-right::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(14,162,122,0.15),rgba(13,17,23,0.25))}
+.hero-chip{position:absolute;bottom:40px;left:40px;z-index:2;background:rgba(255,255,255,0.12);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.25);border-radius:14px;padding:16px 22px;box-shadow:0 8px 32px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.15)}
+.chip-label{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:4px}
+.chip-val{font-size:22px;font-weight:700;color:white}
 
-/* SCROLL SECTION */
-.scroll-section{padding:0 60px 120px;max-width:1200px;margin:0 auto}
-.scroll-section-title{text-align:center;margin-bottom:80px}
-.scroll-section-title .stag{display:inline-flex;align-items:center;gap:6px;background:var(--teal-pale);border-radius:4px;padding:4px 12px;font-size:11px;font-weight:600;color:var(--teal);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:16px}
-.scroll-section-title h2{font-family:'Fraunces',serif;font-size:clamp(28px,3.5vw,48px);font-weight:300;letter-spacing:-1px;line-height:1.1}
-.scroll-section-title h2 em{font-style:italic;color:var(--teal)}
-.scroll-section-title p{font-size:16px;color:var(--mid);max-width:480px;margin:12px auto 0;line-height:1.75}
+/* ── STATS ── */
+.stats-bar{background:var(--dark);padding:0;position:relative;overflow:hidden}
+.stats-bar::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 100% at 50% 0%,rgba(14,162,122,0.06),transparent 60%)}
+.stats-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);position:relative}
+.stat{background:transparent;padding:44px 32px;border-right:1px solid rgba(255,255,255,0.06);text-align:center}
+.stat:last-child{border-right:none}
+.stat-num{font-family:'Fraunces',serif;font-size:44px;font-weight:300;color:var(--teal-light);line-height:1;margin-bottom:6px;text-shadow:0 0 40px rgba(18,201,148,0.4)}
+.stat-label{font-size:12px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px}
 
-/* STICKY SCROLL FEATURE */
-.sticky-wrap{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;position:relative}
-.sticky-left{position:sticky;top:100px;padding-bottom:40px}
-.sticky-nav{display:flex;flex-direction:column;gap:4px;margin-top:40px}
-.sticky-nav-item{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:10px;cursor:pointer;transition:all 0.25s;border:1px solid transparent}
-.sticky-nav-item.active{background:white;border-color:var(--border);box-shadow:0 4px 16px rgba(0,0,0,0.06)}
-.sticky-nav-item:hover:not(.active){background:rgba(14,162,122,0.04)}
-.sni-dot{width:8px;height:8px;border-radius:50%;background:var(--border-dark);flex-shrink:0;transition:background 0.25s}
-.sticky-nav-item.active .sni-dot{background:var(--teal)}
-.sni-num{font-size:11px;color:var(--muted);font-weight:600;width:20px}
-.sticky-nav-item.active .sni-num{color:var(--teal)}
-.sni-label{font-size:14px;color:var(--mid);font-weight:500;transition:color 0.25s}
-.sticky-nav-item.active .sni-label{color:var(--ink);font-weight:600}
-.progress-bar{width:3px;height:100%;background:var(--border);border-radius:2px;position:absolute;left:-24px;top:0}
-.progress-fill{width:3px;background:linear-gradient(180deg,var(--teal),var(--teal-light));border-radius:2px;transition:height 0.1s linear;position:absolute;top:0}
+/* ── SHARED ── */
+.section-tag{display:inline-flex;align-items:center;gap:6px;background:var(--teal-pale);border-radius:4px;padding:4px 12px;font-size:11px;font-weight:600;color:var(--teal);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:18px}
+h2{font-family:'Fraunces',serif;font-size:clamp(28px,3.5vw,52px);font-weight:300;letter-spacing:-1px;line-height:1.1;margin-bottom:16px;color:var(--ink)}
+h2 em{font-style:italic;color:var(--teal)}
+.section-sub{font-size:16px;color:var(--mid);line-height:1.8;max-width:520px;margin-bottom:48px}
 
-.sticky-right{display:flex;flex-direction:column;gap:0}
-.solution-block{min-height:80vh;display:flex;align-items:center;padding:60px 0;border-bottom:1px solid var(--border)}
-.solution-block:last-child{border-bottom:none}
-.sol-card{background:white;border:1px solid var(--border);border-radius:24px;padding:48px;box-shadow:0 4px 24px rgba(0,0,0,0.05);transition:all 0.4s;width:100%;position:relative;overflow:hidden}
-.sol-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--teal),var(--teal-light));transform:scaleX(0);transform-origin:left;transition:transform 0.4s ease}
-.solution-block.in-view .sol-card{box-shadow:0 16px 60px rgba(14,162,122,0.1);border-color:rgba(14,162,122,0.2);transform:translateY(-4px)}
-.solution-block.in-view .sol-card::before{transform:scaleX(1)}
-.sol-tag{display:inline-flex;align-items:center;gap:6px;background:var(--teal-pale);border-radius:4px;padding:4px 12px;font-size:10px;font-weight:600;color:var(--teal);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:20px}
-.sol-icon{font-size:44px;margin-bottom:20px;display:block;filter:drop-shadow(0 4px 12px rgba(14,162,122,0.2))}
-.sol-title{font-family:'Fraunces',serif;font-size:clamp(24px,2.5vw,34px);font-weight:400;line-height:1.15;margin-bottom:14px;color:var(--ink)}
-.sol-title em{font-style:italic;color:var(--teal)}
-.sol-desc{font-size:15px;color:var(--mid);line-height:1.8;margin-bottom:28px}
-.sol-features{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:28px}
-.sol-feat{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:var(--bg);border:1px solid var(--border);border-radius:10px;transition:all 0.2s}
-.sol-feat:hover{border-color:var(--teal);background:var(--teal-pale)}
-.sol-feat-check{color:var(--teal);font-size:14px;margin-top:1px;flex-shrink:0;font-weight:700}
-.sol-feat-text{font-size:13px;color:var(--mid);line-height:1.5}
-.sol-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
-.sol-pill{font-size:11px;padding:4px 12px;background:white;border:1px solid var(--border);color:var(--mid);border-radius:20px;font-weight:500}
-.sol-cta{display:inline-flex;align-items:center;gap:8px;color:var(--teal);font-size:14px;font-weight:600;text-decoration:none;transition:gap 0.2s}
-.sol-cta:hover{gap:12px}
+/* ── FLOW ── */
+.flow-section{background:var(--dark2);position:relative;overflow:hidden}
+.flow-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(14,162,122,0.05),transparent 70%)}
+.flow-inner{max-width:1200px;margin:0 auto;padding:100px 60px;position:relative}
+.flow-inner h2{color:white}
+.flow-inner .section-sub{color:rgba(255,255,255,0.45)}
+.flow-steps{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:stretch;gap:12px;margin-top:48px}
+.flow-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:18px;padding:32px 24px;transition:all 0.35s;box-shadow:0 4px 24px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.05)}
+.flow-card:hover{background:rgba(255,255,255,0.07);border-color:rgba(14,162,122,0.4);transform:translateY(-8px);box-shadow:0 24px 60px rgba(14,162,122,0.18),inset 0 1px 0 rgba(255,255,255,0.08)}
+.flow-card.center{background:linear-gradient(135deg,rgba(14,162,122,0.12),rgba(14,162,122,0.04));border-color:rgba(14,162,122,0.3);box-shadow:0 4px 24px rgba(14,162,122,0.12),inset 0 1px 0 rgba(14,162,122,0.1)}
+.flow-badge{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--teal-light);font-weight:600;margin-bottom:10px}
+.flow-icon{font-size:32px;margin-bottom:12px;display:block;filter:drop-shadow(0 4px 12px rgba(14,162,122,0.3))}
+.flow-title{font-family:'Fraunces',serif;font-size:20px;font-weight:400;color:white;margin-bottom:10px}
+.flow-desc{font-size:13px;color:rgba(255,255,255,0.45);line-height:1.7}
+.flow-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.flow-tag{font-size:10px;padding:3px 10px;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.35);border-radius:4px}
+.flow-arr{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;opacity:0.6;padding:0 4px;min-width:44px}
+.flow-arr-icon{color:var(--teal-light);font-size:20px}
+.flow-arr-txt{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;white-space:nowrap}
 
-/* VISUAL inside card */
-.sol-visual{background:var(--dark2);border-radius:14px;padding:24px;margin-top:28px;position:relative;overflow:hidden}
-.sol-visual::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(14,162,122,0.08),transparent 70%)}
-.sol-visual-title{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:14px}
-.sol-code{font-family:monospace;font-size:12px;color:rgba(14,162,122,0.9);line-height:1.8}
-.sol-code .dim{color:rgba(255,255,255,0.25)}
-.sol-code .val{color:#E8C97A}
-.sol-code .str{color:rgba(255,255,255,0.6)}
-.sol-metric-row{display:flex;gap:16px;margin-top:14px}
-.sol-metric{flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:12px;text-align:center}
-.sol-metric-num{font-family:'Fraunces',serif;font-size:24px;font-weight:400;color:var(--teal-light)}
-.sol-metric-label{font-size:10px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+/* ── HOW ── */
+.how-wrap{padding:100px 60px;max-width:1200px;margin:0 auto}
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
+.how-card{background:white;border:1px solid var(--border);border-radius:20px;padding:40px 36px;transition:all 0.35s;position:relative;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.06)}
+.how-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--teal),var(--teal-light));transform:scaleX(0);transform-origin:left;transition:transform 0.35s ease}
+.how-card:hover{border-color:rgba(14,162,122,0.25);transform:translateY(-8px);box-shadow:0 24px 64px rgba(14,162,122,0.13)}
+.how-card:hover::before{transform:scaleX(1)}
+.how-num{font-family:'Fraunces',serif;font-size:52px;font-weight:400;color:rgba(14,162,122,0.55);line-height:1;margin-bottom:20px}
+.how-title{font-size:17px;font-weight:700;color:var(--ink);margin-bottom:10px}
+.how-desc{font-size:14px;color:var(--mid);line-height:1.75}
 
-/* STATS BAR */
-.sol-stats{background:var(--dark);padding:64px 60px;margin-top:0}
-.sol-stats-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
-.sol-stat{padding:36px 32px;border-right:1px solid rgba(255,255,255,0.06);text-align:center}
-.sol-stat:last-child{border-right:none}
-.sol-stat-num{font-family:'Fraunces',serif;font-size:42px;font-weight:300;color:var(--teal-light);line-height:1;margin-bottom:6px;text-shadow:0 0 30px rgba(18,201,148,0.3)}
-.sol-stat-label{font-size:12px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px}
+/* ── IGAMING ── */
+.igaming-section{background:linear-gradient(180deg,#fff 0%,#eef9f5 50%,#fff 100%);padding:100px 60px;position:relative;overflow:hidden}
+.igaming-section::before{content:'';position:absolute;top:-100px;right:-100px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(14,162,122,0.05),transparent 70%);pointer-events:none}
+.igaming-inner{max-width:1200px;margin:0 auto;position:relative}
+.igaming-split{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;margin-bottom:48px}
+.igaming-img{border-radius:20px;overflow:hidden;height:360px;position:relative;background:#0a1628;box-shadow:0 24px 80px rgba(0,0,0,0.2)}
+#igCanvas{position:absolute;inset:0;width:100%;height:100%}
+.ig-widget{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:2;padding:24px}
+.ig-flow-row{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.ig-node{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:14px;padding:14px 18px;text-align:center;min-width:100px;backdrop-filter:blur(8px);transition:all 0.3s}
+.ig-node.active{border-color:rgba(14,162,122,0.6);background:rgba(14,162,122,0.12);box-shadow:0 0 24px rgba(14,162,122,0.25)}
+.ig-node-icon{font-size:22px;margin-bottom:4px}
+.ig-node-label{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.5)}
+.ig-node-val{font-size:13px;font-weight:600;color:white;margin-top:2px}
+.ig-arrow{color:rgba(14,162,122,0.7);font-size:20px;position:relative;width:48px;text-align:center}
+.ig-pulse-dot{position:absolute;width:8px;height:8px;border-radius:50%;background:var(--teal-light);top:50%;transform:translateY(-50%);animation:moveDot 2s linear infinite}
+@keyframes moveDot{0%{left:-4px;opacity:0}10%{opacity:1}90%{opacity:1}100%{left:calc(100% - 4px);opacity:0}}
+.ig-ticker{display:flex;flex-direction:column;gap:6px;width:100%;max-width:340px;margin-top:12px}
+.ig-tick{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:8px 14px;font-size:12px;animation:fadeSlideIn 0.4s ease both}
+@keyframes fadeSlideIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.ig-tick-left{color:rgba(255,255,255,0.5)}
+.ig-tick-right{color:var(--teal-light);font-weight:600}
+.ig-tick-badge{font-size:9px;padding:2px 8px;border-radius:10px;background:rgba(14,162,122,0.15);border:1px solid rgba(14,162,122,0.25);color:var(--teal-light);margin-left:8px}
+.igaming-stats{display:flex;margin-top:24px;border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.05)}
+.ig-stat{flex:1;padding:18px 20px;border-right:1px solid var(--border);text-align:center}
+.ig-stat:last-child{border-right:none}
+.ig-stat-num{font-family:'Fraunces',serif;font-size:26px;font-weight:400;color:var(--teal)}
+.ig-stat-label{font-size:11px;color:var(--muted);margin-top:3px}
+.igaming-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.ig-card{background:white;border:1px solid var(--border);border-radius:18px;padding:32px;transition:all 0.35s;box-shadow:0 4px 16px rgba(0,0,0,0.05);position:relative;overflow:hidden}
+.ig-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal),var(--teal-light));transform:scaleX(0);transform-origin:left;transition:transform 0.35s ease}
+.ig-card:hover{border-color:rgba(14,162,122,0.25);transform:translateY(-6px);box-shadow:0 20px 56px rgba(14,162,122,0.12)}
+.ig-card:hover::after{transform:scaleX(1)}
+.ig-icon{width:44px;height:44px;border-radius:12px;background:var(--teal-pale);border:1px solid rgba(14,162,122,0.15);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:16px}
+.ig-title{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:8px}
+.ig-desc{font-size:13px;color:var(--mid);line-height:1.7}
+.ig-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.ig-tag{font-size:11px;padding:3px 10px;background:var(--bg);border:1px solid var(--border);color:var(--mid);border-radius:20px}
 
-/* CTA BAND */
-.cta-band{background:linear-gradient(135deg,#0a1f14,#0d2a1a);padding:100px 60px;text-align:center;position:relative;overflow:hidden}
-.cta-band::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 50%,rgba(14,162,122,0.1),transparent)}
-.cta-band h2{font-family:'Fraunces',serif;font-size:clamp(32px,4vw,56px);font-weight:300;color:white;letter-spacing:-1px;line-height:1.1;margin-bottom:16px}
-.cta-band h2 em{font-style:italic;color:var(--teal-light)}
-.cta-band p{font-size:17px;color:rgba(255,255,255,0.5);max-width:480px;margin:0 auto 40px;line-height:1.75}
-.cta-band-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.btn-white{background:white;color:var(--ink);padding:14px 36px;border-radius:10px;font-weight:700;font-size:15px;cursor:pointer;border:none;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.2s;text-decoration:none;display:inline-block}
-.btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(255,255,255,0.15)}
-.btn-outline-white{background:transparent;color:white;padding:14px 36px;border-radius:10px;font-weight:500;font-size:15px;cursor:pointer;border:1.5px solid rgba(255,255,255,0.25);font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.2s;text-decoration:none;display:inline-block}
-.btn-outline-white:hover{border-color:var(--teal-light);color:var(--teal-light)}
+/* ── CONTACT ── */
+.contact-section{background:var(--dark);position:relative;overflow:hidden}
+.contact-section::before{content:'';position:absolute;bottom:-200px;left:-200px;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(14,162,122,0.06),transparent 70%);pointer-events:none}
+.contact-inner{max-width:1200px;margin:0 auto;padding:100px 60px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;position:relative}
+.contact-left h2{color:white}
+.contact-left .section-sub{color:rgba(255,255,255,0.45)}
+.contact-info{margin-top:36px;display:flex;flex-direction:column;gap:16px}
+.contact-email-block{display:flex;align-items:center;gap:16px;padding:20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;text-decoration:none;transition:all 0.25s;box-shadow:0 4px 16px rgba(0,0,0,0.15)}
+.contact-email-block:hover{border-color:rgba(14,162,122,0.5);background:rgba(14,162,122,0.08);transform:translateY(-2px);box-shadow:0 12px 40px rgba(14,162,122,0.15)}
+.ce-icon{width:44px;height:44px;border-radius:10px;background:rgba(14,162,122,0.15);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.ce-type{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:3px}
+.ce-label{font-size:16px;color:white;font-weight:500}
+.ce-arrow{margin-left:auto;color:var(--teal-light);font-size:20px}
+.contact-promise{background:rgba(14,162,122,0.08);border:1px solid rgba(14,162,122,0.2);border-radius:12px;padding:20px}
+.cp-title{font-size:14px;font-weight:600;color:var(--teal-light);margin-bottom:6px}
+.cp-desc{font-size:13px;color:rgba(255,255,255,0.45);line-height:1.6}
+.contact-form{background:white;border-radius:20px;padding:44px;box-shadow:0 32px 100px rgba(0,0,0,0.5)}
+.form-title{font-family:'Fraunces',serif;font-size:26px;font-weight:400;color:var(--ink);margin-bottom:6px}
+.form-sub{font-size:14px;color:var(--muted);margin-bottom:28px}
+.fg{margin-bottom:14px}
+.fg label{display:block;font-size:12px;font-weight:600;color:var(--mid);margin-bottom:6px}
+.fg input,.fg select,.fg textarea{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:12px 14px;color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;outline:none;transition:border 0.2s;-webkit-appearance:none}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--teal);background:white}
+.fg select option{background:white}
+.fg textarea{height:84px;resize:none}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.submit-btn{width:100%;background:var(--teal);color:white;padding:14px;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;border:none;cursor:pointer;transition:all 0.2s;margin-top:4px}
+.submit-btn:hover{background:var(--teal-light)}
 
-/* FOOTER */
+/* ── FOOTER ── */
 footer{background:var(--dark2);border-top:1px solid rgba(255,255,255,0.06);padding:36px 60px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px}
 .footer-logo{font-size:18px;font-weight:700;color:white}
 .footer-logo span{color:var(--teal)}
@@ -140,403 +193,286 @@ footer{background:var(--dark2);border-top:1px solid rgba(255,255,255,0.06);paddi
 .footer-links a:hover{color:white}
 .footer-copy{font-size:12px;color:rgba(255,255,255,0.18)}
 
-/* MOBILE */
+/* ── MOBILE ── */
 @media(max-width:768px){
   nav{padding:0 20px}
   .nav-links,.nav-cta{display:none}
   .hamburger{display:flex}
-  .page-hero{grid-template-columns:1fr;padding:120px 20px 64px;gap:40px}
-  .scroll-section{padding:0 20px 80px}
-  .sticky-wrap{grid-template-columns:1fr}
-  .sticky-left{position:static;padding-bottom:0}
-  .sticky-nav{display:none}
-  .solution-block{min-height:auto;padding:32px 0}
-  .sol-card{padding:28px 20px}
-  .sol-features{grid-template-columns:1fr}
-  .sol-stats{padding:48px 20px}
-  .sol-stats-inner{grid-template-columns:1fr 1fr}
-  .sol-stat{padding:24px 16px;border-bottom:1px solid rgba(255,255,255,0.06)}
-  .cta-band{padding:64px 20px}
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .hero-left{padding:48px 20px 36px}
+  .hero-right{height:240px}
+  .hero-chip{bottom:16px;left:16px;padding:12px 16px}
+  .chip-val{font-size:18px}
+  .stats-inner{grid-template-columns:1fr 1fr}
+  .stat{padding:28px 16px;border-bottom:1px solid rgba(255,255,255,0.06)}
+  .stat:nth-child(even){border-right:none}
+  .flow-inner{padding:64px 20px}
+  .flow-steps{grid-template-columns:1fr;gap:0}
+  .flow-arr{flex-direction:row;padding:8px 0;min-width:auto}
+  .flow-arr-icon{transform:rotate(90deg)}
+  .how-wrap{padding:64px 20px}
+  .how-grid{grid-template-columns:1fr;gap:14px}
+  .igaming-section{padding:64px 20px}
+  .igaming-split{grid-template-columns:1fr;gap:32px}
+  .igaming-img{height:220px}
+  .igaming-cards{grid-template-columns:1fr;gap:12px}
+  .contact-inner{grid-template-columns:1fr;gap:40px;padding:64px 20px}
+  .contact-form{padding:24px 20px;border-radius:14px}
+  .fg-row{grid-template-columns:1fr}
   footer{padding:28px 20px;flex-direction:column;align-items:flex-start}
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <a href="index.html" class="logo">Orv<span>ix</span></a>
   <ul class="nav-links">
-    <li><a href="index.html#flow">How It Works</a></li>
-    <li><a href="solutions.html" class="active" style="color:var(--ink);font-weight:600">Solutions</a></li>
-    <li><a href="index.html#igaming">iGaming</a></li>
-    <li><a href="index.html#contact">Contact</a></li>
+    <li><a href="solutions.html">Solutions</a></li>
+    <li><a href="#flow">How It Works</a></li>
+    <li><a href="#igaming">iGaming</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ul>
-  <a href="index.html#contact" class="nav-cta">Get started</a>
+  <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get started</button>
   <button class="hamburger" id="ham" onclick="toggleMenu()"><span></span><span></span><span></span></button>
 </nav>
 <div class="mobile-nav" id="mobileNav">
-  <a href="index.html" onclick="closeMenu()">Home</a>
-  <a href="index.html#flow" onclick="closeMenu()">How It Works</a>
-  <a href="index.html#igaming" onclick="closeMenu()">iGaming</a>
-  <a href="index.html#contact" onclick="closeMenu()">Contact</a>
-  <a href="index.html#contact" class="mob-cta" onclick="closeMenu()">Get started →</a>
+  <a href="solutions.html" onclick="closeMenu()">Solutions</a>
+  <a href="#flow" onclick="closeMenu()">How It Works</a>
+  <a href="#igaming" onclick="closeMenu()">iGaming</a>
+  <a href="#contact" onclick="closeMenu()">Contact</a>
+  <a href="#contact" class="mob-cta" onclick="closeMenu()">Get started →</a>
 </div>
 
-<!-- PAGE HERO -->
-<div class="page-hero">
-  <div>
-    <div class="page-hero-tag">Solutions</div>
-    <h1>Every tool your business needs to move <em>money globally</em></h1>
-    <p class="page-hero-sub">From fiat acceptance to crypto settlement, Orvix provides the full orchestration stack. One integration, everything covered.</p>
-    <div class="page-hero-actions">
-      <a href="index.html#contact" class="btn-primary">Talk to us →</a>
-      <a href="#solutions" class="btn-ghost">Explore solutions</a>
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-badge reveal"><span class="badge-dot"></span> Fiat → Crypto Orchestration</div>
+    <h1 class="reveal delay-1">Payments that move<br>at the speed of <em>crypto</em></h1>
+    <p class="hero-sub reveal delay-2">Orvix connects your business to global fiat payment rails and crypto liquidity in one unified API, built for iGaming, fintech, and Web3 operators.</p>
+    <div class="hero-actions reveal delay-3">
+      <button class="btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Request access →</button>
+      <button class="btn-secondary" onclick="document.getElementById('flow').scrollIntoView({behavior:'smooth'})">See how it works</button>
     </div>
   </div>
-  <div class="hero-cards">
-    <div class="hero-mini-card">
-      <div class="hmc-icon">🔄</div>
-      <div><div class="hmc-title">Fiat to Crypto Orchestration</div><div class="hmc-sub">Accept any currency, settle in any asset</div></div>
+  <div class="hero-right">
+    <img src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=900&auto=format&fit=crop&q=80" alt="Crypto fintech" loading="eager">
+    <div class="hero-chip">
+      <div class="chip-label">Avg. settlement</div>
+      <div class="chip-val">~18ms ⚡</div>
     </div>
-    <div class="hero-mini-card">
-      <div class="hmc-icon">🛡️</div>
-      <div><div class="hmc-title">Compliance Engine</div><div class="hmc-sub">KYC, AML, MiCA — fully automated</div></div>
-    </div>
-    <div class="hero-mini-card">
-      <div class="hmc-icon">⚡</div>
-      <div><div class="hmc-title">Smart Payment Routing</div><div class="hmc-sub">Multi-PSP, lowest cost, highest uptime</div></div>
-    </div>
-    <div class="hero-mini-card">
-      <div class="hmc-icon">💹</div>
-      <div><div class="hmc-title">Liquidity Management</div><div class="hmc-sub">Best-execution across major venues</div></div>
-    </div>
-    <div class="hero-mini-card">
-      <div class="hmc-icon">🎮</div>
-      <div><div class="hmc-title">iGaming Stack</div><div class="hmc-sub">Deposits, withdrawals, compliance — in one</div></div>
-    </div>
-  </div>
-</div>
-
-<!-- STICKY SCROLL SOLUTIONS -->
-<div class="scroll-section" id="solutions">
-  <div class="scroll-section-title">
-    <div class="stag">Our Solutions</div>
-    <h2>Everything you need,<br><em>nothing you don't</em></h2>
-    <p>Scroll through our core solutions. Each one is designed to solve a specific problem your business faces when moving money across borders and blockchains.</p>
-  </div>
-
-  <div class="sticky-wrap" id="stickyWrap">
-    <!-- LEFT: sticky nav -->
-    <div class="sticky-left">
-      <div style="position:relative;padding-left:28px">
-        <div class="progress-bar"><div class="progress-fill" id="progressFill" style="height:0%"></div></div>
-        <div class="sticky-nav" id="stickyNav">
-          <div class="sticky-nav-item active" data-index="0" onclick="scrollToSolution(0)">
-            <div class="sni-dot"></div>
-            <div class="sni-num">01</div>
-            <div class="sni-label">Fiat to Crypto Orchestration</div>
-          </div>
-          <div class="sticky-nav-item" data-index="1" onclick="scrollToSolution(1)">
-            <div class="sni-dot"></div>
-            <div class="sni-num">02</div>
-            <div class="sni-label">Smart Payment Routing</div>
-          </div>
-          <div class="sticky-nav-item" data-index="2" onclick="scrollToSolution(2)">
-            <div class="sni-dot"></div>
-            <div class="sni-num">03</div>
-            <div class="sni-label">Compliance Engine</div>
-          </div>
-          <div class="sticky-nav-item" data-index="3" onclick="scrollToSolution(3)">
-            <div class="sni-dot"></div>
-            <div class="sni-num">04</div>
-            <div class="sni-label">Liquidity Management</div>
-          </div>
-          <div class="sticky-nav-item" data-index="4" onclick="scrollToSolution(4)">
-            <div class="sni-dot"></div>
-            <div class="sni-num">05</div>
-            <div class="sni-label">iGaming Stack</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- RIGHT: scrollable solutions -->
-    <div class="sticky-right" id="stickyRight">
-
-      <!-- 01 -->
-      <div class="solution-block" data-index="0">
-        <div class="sol-card">
-          <div class="sol-tag">Core Product</div>
-          <span class="sol-icon">🔄</span>
-          <div class="sol-title">Fiat to Crypto<br><em>Orchestration</em></div>
-          <p class="sol-desc">Accept payments in any fiat currency from anywhere in the world — and settle in crypto automatically. Orvix handles the entire flow: routing, conversion, compliance, and delivery. One API call. Everything handled.</p>
-          <div class="sol-features">
-            <div class="sol-feat"><span class="sol-feat-check">✓</span><span class="sol-feat-text">Real-time FX conversion at market rates</span></div>
-            <div class="sol-feat"><span class="sol-feat-check">✓</span><span class="sol-feat-text">50+ fiat currencies supported</span></div>
-            <div class="sol-feat"><span class="sol-feat-check">✓</span><span class="sol-feat-text">BTC, ETH, USDC, USDT settlement</span></div>
-            <div class="sol-feat"><span class="sol-feat-check">✓</span><span class="sol-feat-text">Sub-20ms end-to-end latency</span></div>
-            <div class="sol-feat"><span class="sol-feat-check">✓</span><span class="sol-feat-text">Webhook notifications per transaction</span></div>
-            <div class="sol-feat"><span class="sol-feat-check">✓</span><span class="sol-feat-text">Full audit trail and reconciliation</span></div>
-          </div>
-          <div class="sol-tags">
-            <span class="sol-pill">SEPA</span><span class="sol-pill">SWIFT</span><span class="sol-pill">Faster Payments</span><span class="sol-pill">Cards</span><span class="sol-pill">APMs</span><span class="sol-pill">Polygon</span><span class="sol-pill">Ethereum</span>
-          </div>
-          <div class="sol-visual">
-            <div class="sol-visual-title">Live API Example</div>
-            <div class="sol-code">
-              <span class="dim">POST</span> <span class="str">/v1/orchestrate</span><br>
-              <span class="dim">{</span><br>
-              &nbsp;&nbsp;<span class="str">"amount"</span><span class="dim">:</span> <span class="val">5000</span><span class="dim">,</span><br>
-              &nbsp;&nbsp;<span class="str">"currency"</span><span class="dim">:</span> <span class="val">"EUR"</span><span class="dim">,</span><br>
-              &nbsp;&nbsp;<span class="str">"settle_as"</span><span class="dim">:</span> <span class="val">"USDC"</span><span class="dim">,</span><br>
-              &nbsp;&nbsp;<span class="str">"network"</span><span class="dim">:</span> <span class="val">"polygon"</span><br>
-              <span class="dim">}</span><br>
-              <span style="color:rgba(18,201,148,0.8)">→ 200 OK · settled in 16ms</span>
-            </div>
-            <div class="sol-metric-row">
-              <div class="sol-metric"><div class="sol-metric-num">16ms</div><div class="sol-metric-label">Latency</div></div>
-              <div class="sol-metric"><div class="sol-metric-num">$0</div><div class="sol-metric-label">Setup fee</div></div>
-              <div class="sol-metric"><div class="sol-metric-num">99.98%</div><div class="sol-metric-label">Uptime</div></div>
-            </div>
-          </div>
-          <a href="index.html#contact" class="sol-cta" style="margin-top:24px;display:inline-flex">Get access →</a>
-        </div>
-      </div>
-
-      <!-- 02 -->
-      <div class="solution-block" data-index="1">
-        <div class="sol-card">
-          <div class="sol-tag">Infrastructure</div>
-          <span class="sol-icon">⚡</span>
-          <div class="sol-title">Smart Payment<br><em>Routing</em></div>
-          <p class="sol-desc">Stop losing revenue to failed transactions. Orvix's routing engine evaluates every payment in real time and selects the optimal provider — based on cost, acceptance rate, geography, and availability. When one provider fails, another takes over instantly, with no downtime and no manual intervention.</p>
-          <div class="sol-features">
-            <div class="sol-feat"><span class="sol-feat-check">✓</span><span class="sol-feat-text">50+ acquiring banks connected</span></div>
-            <div class="sol-feat"><span class="sol-feat-check">✓</span><span class="sol-feat-text">Automatic failover in milliseconds</span></div>
-            <div class="sol-feat"><span class="sol-feat-check">✓</span><span class="sol-feat-text">Cost-optimized routing per transaction</span></div>
-            <div class="sol-feat"><span class="sol-feat-check">✓</span><span class="sol-feat-text">Geography-aware provider selection</span></div>
-            <div class="sol-feat"><span class="sol-feat-check">✓</span><span class="sol-feat-text">Real-time acceptance rate monitoring</span></div>
-            <div class="sol-feat"><span class="sol-feat-check">✓</span><span class="sol-feat-text">Custom routing rules per merchant</span></div>
-          </div>
-          <div class="sol-tags">
-            <span class="sol-pill">Multi-PSP</span><span class="sol-pill">Failover</span><span class="sol-pill">Load balancing</span><span class="sol-pill">Cascade routing</span>
-          </div>
-          <div class="sol-visual">
-            <div class="sol-visual-title">Routing Decision — Real Time</div>
-            <div class="sol-code">
-              <span class="dim">Transaction received: €1,200 · DE customer</span><br>
-              <span class="str">→ Evaluating 8 providers...</span><br>
-              <span class="dim">  Provider A: 94.1% acc · €0.18 fee</span><br>
-              <span style="color:rgba(18,201,148,0.9)">  Provider B: 97.3% acc · €0.14 fee ✓ selected</span><br>
-              <span class="dim">  Provider C: 91.8% acc · €0.22 fee</span><br>
-              <span class="str">→ Routed in 4ms</span>
-            </div>
-            <div class="sol-metric-row">
-              <div class="sol-metric"><div class="sol-metric-num">+18%</div><div class="sol-metric-label">Acceptance lift</div></div>
-              <div class="sol-metric"><div class="sol-metric-num">-24%</div><div class="sol-metric-label">Processing cost</div></div>
-              <div class="sol-metric"><div class="sol-metric-num">4ms</div><div class="sol-metric-label">Route decision</div></div>
-            </div>
-          </div>
-          <a href="index.html#contact" class="sol-cta" style="margin-top:24px;display:inline-flex">Get access →</a>
-        </div>
-      </div>
-
-      <!-- 03 -->
-      <div class="solution-block" data-index="2">
-        <div class="sol-card">
-          <div class="sol-tag">Compliance</div>
-          <span class="sol-icon">🛡️</span>
-          <div class="sol-title">Compliance<br><em>Engine</em></div>
-          <p class="sol-desc">Compliance isn't a feature you add later — it needs to be part of every transaction from day one. Orvix embeds KYC orchestration, AML screening, and transaction monitoring directly into the payment flow, so you never have to choose between speed and safety.</p>
-          <div class="sol-features">
-            <div class="sol-feat"><span class="sol-feat-check">✓</span><span class="sol-feat-text">Real-time AML screening on every payment</span></div>
-            <div class="sol-feat"><span class="sol-feat-check">✓</span><span class="sol-feat-text">KYC orchestration with multiple providers</span></div>
-            <div class="sol-feat"><span class="sol-feat-check">✓</span><span class="sol-feat-text">Transaction monitoring and risk scoring</span></div>
-            <div class="sol-feat"><span class="sol-feat-check">✓</span><span class="sol-feat-text">MiCA, FinCEN, and FATF compliant</span></div>
-            <div class="sol-feat"><span class="sol-feat-check">✓</span><span class="sol-feat-text">White-labeled for your brand</span></div>
-            <div class="sol-feat"><span class="sol-feat-check">✓</span><span class="sol-feat-text">SAR filing assistance</span></div>
-          </div>
-          <div class="sol-tags">
-            <span class="sol-pill">MiCA</span><span class="sol-pill">FinCEN</span><span class="sol-pill">FATF</span><span class="sol-pill">AML</span><span class="sol-pill">KYC</span><span class="sol-pill">PEP screening</span><span class="sol-pill">Sanctions</span>
-          </div>
-          <div class="sol-visual">
-            <div class="sol-visual-title">Compliance Check — Live</div>
-            <div class="sol-code">
-              <span class="str">user_id: usr_9182</span> <span class="dim">→ KYC check</span><br>
-              <span class="dim">  Identity verified ✓</span><br>
-              <span class="dim">  PEP screening: clear ✓</span><br>
-              <span class="dim">  Sanctions: no match ✓</span><br>
-              <span class="dim">  Risk score: </span><span style="color:#E8C97A">0.12 (low)</span><br>
-              <span style="color:rgba(18,201,148,0.9)">→ Approved in 220ms</span>
-            </div>
-            <div class="sol-metric-row">
-              <div class="sol-metric"><div class="sol-metric-num">220ms</div><div class="sol-metric-label">KYC check</div></div>
-              <div class="sol-metric"><div class="sol-metric-num">99.7%</div><div class="sol-metric-label">Accuracy</div></div>
-              <div class="sol-metric"><div class="sol-metric-num">180+</div><div class="sol-metric-label">Jurisdictions</div></div>
-            </div>
-          </div>
-          <a href="index.html#contact" class="sol-cta" style="margin-top:24px;display:inline-flex">Get access →</a>
-        </div>
-      </div>
-
-      <!-- 04 -->
-      <div class="solution-block" data-index="3">
-        <div class="sol-card">
-          <div class="sol-tag">Treasury</div>
-          <span class="sol-icon">💹</span>
-          <div class="sol-title">Liquidity<br><em>Management</em></div>
-          <p class="sol-desc">Crypto conversions at the wrong moment can cost you significantly. Orvix connects to deep liquidity pools across major venues and uses smart order routing to ensure best execution — every time, at any volume, without manual intervention.</p>
-          <div class="sol-features">
-            <div class="sol-feat"><span class="sol-feat-check">✓</span><span class="sol-feat-text">Best-execution across 10+ venues</span></div>
-            <div class="sol-feat"><span class="sol-feat-check">✓</span><span class="sol-feat-text">Smart order routing at conversion</span></div>
-            <div class="sol-feat"><span class="sol-feat-check">✓</span><span class="sol-feat-text">Spread optimization at any volume</span></div>
-            <div class="sol-feat"><span class="sol-feat-check">✓</span><span class="sol-feat-text">Auto-hedging to reduce crypto exposure</span></div>
-            <div class="sol-feat"><span class="sol-feat-check">✓</span><span class="sol-feat-text">Multi-asset support: BTC, ETH, stablecoins</span></div>
-            <div class="sol-feat"><span class="sol-feat-check">✓</span><span class="sol-feat-text">Real-time treasury dashboard</span></div>
-          </div>
-          <div class="sol-tags">
-            <span class="sol-pill">BTC</span><span class="sol-pill">ETH</span><span class="sol-pill">USDC</span><span class="sol-pill">USDT</span><span class="sol-pill">Best execution</span><span class="sol-pill">Auto-hedging</span>
-          </div>
-          <div class="sol-visual">
-            <div class="sol-visual-title">Order Routing — Best Execution</div>
-            <div class="sol-code">
-              <span class="dim">Selling €50,000 → USDC</span><br>
-              <span class="str">→ Scanning venues for best rate...</span><br>
-              <span class="dim">  Venue A: 1.0821 USDC/EUR</span><br>
-              <span style="color:rgba(18,201,148,0.9)">  Venue B: 1.0849 USDC/EUR ✓ best</span><br>
-              <span class="dim">  Venue C: 1.0812 USDC/EUR</span><br>
-              <span class="str">→ Executed: 54,245 USDC received</span>
-            </div>
-            <div class="sol-metric-row">
-              <div class="sol-metric"><div class="sol-metric-num">+0.28%</div><div class="sol-metric-label">Better rate</div></div>
-              <div class="sol-metric"><div class="sol-metric-num">10+</div><div class="sol-metric-label">Venues</div></div>
-              <div class="sol-metric"><div class="sol-metric-num">&lt;1s</div><div class="sol-metric-label">Execution</div></div>
-            </div>
-          </div>
-          <a href="index.html#contact" class="sol-cta" style="margin-top:24px;display:inline-flex">Get access →</a>
-        </div>
-      </div>
-
-      <!-- 05 -->
-      <div class="solution-block" data-index="4">
-        <div class="sol-card">
-          <div class="sol-tag">iGaming</div>
-          <span class="sol-icon">🎮</span>
-          <div class="sol-title">The Complete<br><em>iGaming Stack</em></div>
-          <p class="sol-desc">Online gaming has unique demands: instant deposits, instant withdrawals, global players paying in dozens of currencies, and regulators watching every transaction. Orvix's iGaming stack is purpose-built for this environment — handling everything from cashier to compliance.</p>
-          <div class="sol-features">
-            <div class="sol-feat"><span class="sol-feat-check">✓</span><span class="sol-feat-text">Player deposits credited in under 3 seconds</span></div>
-            <div class="sol-feat"><span class="sol-feat-check">✓</span><span class="sol-feat-text">Crypto withdrawals to any wallet instantly</span></div>
-            <div class="sol-feat"><span class="sol-feat-check">✓</span><span class="sol-feat-text">50+ currencies at the cashier</span></div>
-            <div class="sol-feat"><span class="sol-feat-check">✓</span><span class="sol-feat-text">MGA, UKGC, Curaçao compliance built in</span></div>
-            <div class="sol-feat"><span class="sol-feat-check">✓</span><span class="sol-feat-text">Scales to peak traffic without degradation</span></div>
-            <div class="sol-feat"><span class="sol-feat-check">✓</span><span class="sol-feat-text">White-label cashier widget available</span></div>
-          </div>
-          <div class="sol-tags">
-            <span class="sol-pill">MGA</span><span class="sol-pill">UKGC</span><span class="sol-pill">Curaçao</span><span class="sol-pill">Casino</span><span class="sol-pill">Sports betting</span><span class="sol-pill">Poker</span>
-          </div>
-          <div class="sol-visual">
-            <div class="sol-visual-title">Player Deposit — Live Trace</div>
-            <div class="sol-code">
-              <span class="dim">Player DE4421 · €200 deposit via card</span><br>
-              <span class="str">→ KYC: verified (cached) ✓</span><br>
-              <span class="str">→ AML: clear ✓</span><br>
-              <span class="str">→ FX: €200 → 0.00327 BTC</span><br>
-              <span class="str">→ Wallet credited</span><br>
-              <span style="color:rgba(18,201,148,0.9)">→ Total time: 2.4s ✓</span>
-            </div>
-            <div class="sol-metric-row">
-              <div class="sol-metric"><div class="sol-metric-num">2.4s</div><div class="sol-metric-label">Deposit time</div></div>
-              <div class="sol-metric"><div class="sol-metric-num">99.99%</div><div class="sol-metric-label">Uptime</div></div>
-              <div class="sol-metric"><div class="sol-metric-num">50+</div><div class="sol-metric-label">Currencies</div></div>
-            </div>
-          </div>
-          <a href="index.html#contact" class="sol-cta" style="margin-top:24px;display:inline-flex">Get access →</a>
-        </div>
-      </div>
-
-    </div><!-- /sticky-right -->
   </div>
 </div>
 
 <!-- STATS -->
-<div class="sol-stats">
-  <div class="sol-stats-inner">
-    <div class="sol-stat"><div class="sol-stat-num">$2B+</div><div class="sol-stat-label">Volume processed</div></div>
-    <div class="sol-stat"><div class="sol-stat-num">150+</div><div class="sol-stat-label">Countries</div></div>
-    <div class="sol-stat"><div class="sol-stat-num">99.98%</div><div class="sol-stat-label">Uptime SLA</div></div>
-    <div class="sol-stat"><div class="sol-stat-num">&lt;20ms</div><div class="sol-stat-label">Avg. settlement</div></div>
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat reveal delay-1"><div class="stat-num">$2B+</div><div class="stat-label">Volume processed</div></div>
+    <div class="stat reveal delay-2"><div class="stat-num">150+</div><div class="stat-label">Countries</div></div>
+    <div class="stat reveal delay-3"><div class="stat-num">99.98%</div><div class="stat-label">Uptime SLA</div></div>
+    <div class="stat reveal delay-4"><div class="stat-num">&lt;20ms</div><div class="stat-label">Avg. settlement</div></div>
   </div>
 </div>
 
-<!-- CTA -->
-<div class="cta-band">
-  <h2>Ready to move money<br>at the speed of <em>crypto</em>?</h2>
-  <p>Our team will assess your setup and propose the right integration within 24 hours.</p>
-  <div class="cta-band-actions">
-    <a href="index.html#contact" class="btn-white">Request access →</a>
-    <a href="index.html#flow" class="btn-outline-white">See how it works</a>
+<!-- FLOW -->
+<div class="flow-section" id="flow">
+  <div class="flow-inner">
+    <div class="reveal"><div class="section-tag">How It Works</div></div>
+    <h2 class="reveal delay-1">Fiat to Crypto — <em>three steps</em></h2>
+    <p class="section-sub reveal delay-2">One API call triggers the entire flow. From customer payment to crypto settlement, fully automated in real time.</p>
+    <div class="flow-steps">
+      <div class="flow-card reveal-left delay-1">
+        <div class="flow-badge">Step 01</div>
+        <span class="flow-icon">💳</span>
+        <div class="flow-title">Fiat Payment</div>
+        <div class="flow-desc">Your customer pays in their local currency: card, bank transfer, or local method. We route across 50+ acquiring banks globally.</div>
+        <div class="flow-tags"><span class="flow-tag">SEPA</span><span class="flow-tag">SWIFT</span><span class="flow-tag">Cards</span><span class="flow-tag">APMs</span></div>
+      </div>
+      <div class="flow-arr reveal delay-2"><div class="flow-arr-icon">›</div><div class="flow-arr-txt">Real-time</div></div>
+      <div class="flow-card reveal delay-2">
+        <div class="flow-badge">Step 02</div>
+        <span class="flow-icon">⚙️</span>
+        <div class="flow-title center">Orvix Orchestrates</div>
+        <div class="flow-desc">KYC/AML, FX conversion, smart routing, and compliance, fully automated in milliseconds. One integration, everything handled.</div>
+        <div class="flow-tags"><span class="flow-tag">AML</span><span class="flow-tag">KYC</span><span class="flow-tag">FX</span><span class="flow-tag">MiCA</span></div>
+      </div>
+      <div class="flow-arr reveal delay-3"><div class="flow-arr-icon">›</div><div class="flow-arr-txt">Instant</div></div>
+      <div class="flow-card reveal-right delay-3">
+        <div class="flow-badge">Step 03</div>
+        <span class="flow-icon">🪙</span>
+        <div class="flow-title">Crypto Settlement</div>
+        <div class="flow-desc">Funds arrive as BTC, ETH, USDC, or any supported asset, delivered to your wallet or your customer's. Settled in seconds.</div>
+        <div class="flow-tags"><span class="flow-tag">BTC</span><span class="flow-tag">ETH</span><span class="flow-tag">USDC</span><span class="flow-tag">USDT</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WHY ORVIX -->
+<div class="how-wrap">
+  <div class="reveal"><div class="section-tag">Why Orvix</div></div>
+  <h2 class="reveal delay-1">Built for businesses that<br><em>can't afford downtime</em></h2>
+  <p class="section-sub reveal delay-2">We don't sell you a gateway. We become your orchestration layer, so you focus on growth, not infrastructure.</p>
+  <div class="how-grid">
+    <div class="how-card reveal delay-1">
+      <div class="how-num">01</div>
+      <div class="how-title">Multi-PSP Smart Routing</div>
+      <div class="how-desc">Every transaction routes automatically to the best provider based on cost, acceptance rate, and geography. When one fails, another takes over instantly.</div>
+    </div>
+    <div class="how-card reveal delay-2">
+      <div class="how-num">02</div>
+      <div class="how-title">Compliance by Design</div>
+      <div class="how-desc">AML screening, KYC orchestration, and transaction monitoring built for MiCA, FinCEN, and regional regulations worldwide. Built in from day one, not bolted on.</div>
+    </div>
+    <div class="how-card reveal delay-3">
+      <div class="how-num">03</div>
+      <div class="how-title">Deep Liquidity Access</div>
+      <div class="how-desc">Best-execution crypto settlement across major venues. Smart order routing ensures tightest spreads at the exact moment of conversion, at any volume.</div>
+    </div>
+  </div>
+</div>
+
+<!-- IGAMING -->
+<div class="igaming-section" id="igaming">
+  <div class="igaming-inner">
+    <div class="reveal"><div class="section-tag">iGaming</div></div>
+    <div class="igaming-split">
+      <div>
+        <h2 class="reveal delay-1">The payment layer<br><em>iGaming demands</em></h2>
+        <p class="section-sub reveal delay-2" style="margin-bottom:24px">Online gaming platforms deal with high velocity, global players, and tight regulation. Orvix is built for exactly this: fast deposits, instant withdrawals, full compliance.</p>
+        <div class="igaming-stats reveal delay-3">
+          <div class="ig-stat"><div class="ig-stat-num">3s</div><div class="ig-stat-label">Avg. deposit</div></div>
+          <div class="ig-stat"><div class="ig-stat-num">50+</div><div class="ig-stat-label">Currencies</div></div>
+          <div class="ig-stat"><div class="ig-stat-num">99.99%</div><div class="ig-stat-label">Uptime</div></div>
+        </div>
+      </div>
+      <div class="igaming-img reveal-right delay-2">
+        <canvas id="igCanvas"></canvas>
+        <div class="ig-widget">
+          <div class="ig-flow-row">
+            <div class="ig-node" id="igNode1"><div class="ig-node-icon">💳</div><div class="ig-node-label">Fiat In</div><div class="ig-node-val">€250.00</div></div>
+            <div class="ig-arrow"><div class="ig-pulse-dot" style="animation-delay:0s"></div>›</div>
+            <div class="ig-node" id="igNode2"><div class="ig-node-icon">⚙️</div><div class="ig-node-label">Orvix</div><div class="ig-node-val">Processing</div></div>
+            <div class="ig-arrow"><div class="ig-pulse-dot" style="animation-delay:1s"></div>›</div>
+            <div class="ig-node" id="igNode3"><div class="ig-node-icon">🪙</div><div class="ig-node-label">Crypto Out</div><div class="ig-node-val">0.0041 BTC</div></div>
+          </div>
+          <div class="ig-ticker" id="igTicker"></div>
+        </div>
+      </div>
+    </div>
+    <div class="igaming-cards">
+      <div class="ig-card reveal delay-1"><div class="ig-icon">⚡</div><div class="ig-title">Instant Player Deposits</div><div class="ig-desc">Players fund accounts in their local currency. Orvix converts and credits crypto balances in under 3 seconds, with zero friction at the cashier.</div><div class="ig-tags"><span class="ig-tag">Real-time</span><span class="ig-tag">50+ currencies</span><span class="ig-tag">Cards + APMs</span></div></div>
+      <div class="ig-card reveal delay-2"><div class="ig-icon">💸</div><div class="ig-title">Crypto Withdrawals at Scale</div><div class="ig-desc">Players withdraw in BTC, ETH, USDC, or local fiat. Automated liquidity management eliminates excess crypto risk on your balance sheet.</div><div class="ig-tags"><span class="ig-tag">BTC / ETH</span><span class="ig-tag">USDC / USDT</span><span class="ig-tag">Auto-hedging</span></div></div>
+      <div class="ig-card reveal delay-3"><div class="ig-icon">🛡️</div><div class="ig-title">Gaming-Specific Compliance</div><div class="ig-desc">KYC, AML, and transaction monitoring tuned for gaming risk profiles. MGA, UKGC, Curaçao. We know the regulations you operate under.</div><div class="ig-tags"><span class="ig-tag">MGA</span><span class="ig-tag">UKGC</span><span class="ig-tag">Curaçao</span></div></div>
+      <div class="ig-card reveal delay-4"><div class="ig-icon">📈</div><div class="ig-title">High-Volume Architecture</div><div class="ig-desc">Built for peak traffic: tournaments, jackpots, major events. Elastic infrastructure delivers sub-second response at tens of thousands of TPS.</div><div class="ig-tags"><span class="ig-tag">Auto-scaling</span><span class="ig-tag">Sub-second</span><span class="ig-tag">99.99% uptime</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="contact-section" id="contact">
+  <div class="contact-inner">
+    <div class="contact-left">
+      <div class="reveal"><div class="section-tag">Get in touch</div></div>
+      <h2 class="reveal delay-1" style="color:white">Talk to us about<br><em>your use case</em></h2>
+      <p class="section-sub reveal delay-2">Whether you're processing $100K or $100M monthly, our team will assess your setup and propose the right integration, usually within 24 hours.</p>
+      <div class="contact-info reveal delay-3">
+        <a class="contact-email-block" href="mailto:hello@orvix.io">
+          <div class="ce-icon">✉️</div>
+          <div><div class="ce-type">Email us directly</div><div class="ce-label">hello@orvix.io</div></div>
+          <div class="ce-arrow">→</div>
+        </a>
+        <div class="contact-promise">
+          <div class="cp-title">⏱ We respond within 24 hours</div>
+          <div class="cp-desc">Tell us about your business and volume. We'll come back with a tailored integration plan. No sales pressure, just honest advice.</div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form reveal-right delay-2">
+      <div class="form-title">Request access</div>
+      <div class="form-sub">Sandbox access within 24 hours. No credit card required.</div>
+      <div class="fg-row">
+        <div class="fg"><label>First name</label><input type="text" placeholder="John"></div>
+        <div class="fg"><label>Last name</label><input type="text" placeholder="Smith"></div>
+      </div>
+      <div class="fg"><label>Business email</label><input type="email" placeholder="you@company.com"></div>
+      <div class="fg"><label>Company</label><input type="text" placeholder="Acme Ltd."></div>
+      <div class="fg"><label>Business type</label>
+        <select><option value="">Select your type</option><option>iGaming / Online Casino</option><option>Crypto Exchange</option><option>Neobank / Fintech</option><option>Payment Service Provider</option><option>Web3 / DeFi Platform</option><option>Other</option></select>
+      </div>
+      <div class="fg"><label>Monthly volume</label>
+        <select><option value="">Select range</option><option>Under $100K</option><option>$100K – $1M</option><option>$1M – $10M</option><option>$10M+</option></select>
+      </div>
+      <div class="fg"><label>Tell us about your needs</label><textarea placeholder="Brief description of your payment flows and requirements..."></textarea></div>
+      <button class="submit-btn" onclick="this.textContent='✓ Submitted — we\'ll be in touch within 24h';this.style.background='#0c8f6b'">Submit →</button>
+    </div>
   </div>
 </div>
 
 <footer>
   <div class="footer-logo">Orv<span>ix</span></div>
   <ul class="footer-links">
-    <li><a href="#">Documentation</a></li>
     <li><a href="solutions.html">Solutions</a></li>
+    <li><a href="#">Documentation</a></li>
     <li><a href="#">Privacy Policy</a></li>
     <li><a href="#">Terms</a></li>
-    <li><a href="index.html#contact">Contact</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ul>
   <div class="footer-copy">© 2025 Orvix. All rights reserved.</div>
 </footer>
 
 <script>
-function toggleMenu(){document.getElementById('mobileNav').classList.toggle('open')}
-function closeMenu(){document.getElementById('mobileNav').classList.remove('open')}
+// ── Mobile menu ──
+function toggleMenu(){document.getElementById('mobileNav').classList.toggle('open');document.getElementById('ham').classList.toggle('open')}
+function closeMenu(){document.getElementById('mobileNav').classList.remove('open');document.getElementById('ham').classList.remove('open')}
 
-// Scroll-driven sticky nav
-const blocks = document.querySelectorAll('.solution-block');
-const navItems = document.querySelectorAll('.sticky-nav-item');
-const progressFill = document.getElementById('progressFill');
-const stickyRight = document.getElementById('stickyRight');
+// ── Scroll reveal ──
+const revealEls = document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.reveal-scale');
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}});
+},{threshold:0.12});
+revealEls.forEach(el=>io.observe(el));
 
-function scrollToSolution(i){
-  blocks[i].scrollIntoView({behavior:'smooth', block:'center'});
-}
-
-function onScroll(){
-  const wH = window.innerHeight;
-  let activeIdx = 0;
-
-  blocks.forEach((b, i) => {
-    const rect = b.getBoundingClientRect();
-    const mid = rect.top + rect.height / 2;
-    if(mid < wH * 0.6) activeIdx = i;
-
-    // in-view highlight
-    if(rect.top < wH * 0.7 && rect.bottom > wH * 0.3){
-      b.classList.add('in-view');
-    } else {
-      b.classList.remove('in-view');
-    }
-  });
-
-  navItems.forEach((n, i) => {
-    n.classList.toggle('active', i === activeIdx);
-  });
-
-  // progress bar
-  const rightRect = stickyRight.getBoundingClientRect();
-  const total = stickyRight.offsetHeight - window.innerHeight;
-  const scrolled = -rightRect.top;
-  const pct = Math.max(0, Math.min(100, (scrolled / total) * 100));
-  progressFill.style.height = pct + '%';
-}
-
-window.addEventListener('scroll', onScroll, {passive:true});
-onScroll();
+// ── iGaming canvas widget ──
+(function(){
+  const canvas=document.getElementById('igCanvas');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  let W,H,particles=[];
+  function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight}
+  resize();window.addEventListener('resize',resize);
+  for(let i=0;i<60;i++)particles.push({x:Math.random()*800,y:Math.random()*360,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,r:Math.random()*1.5+.5,o:Math.random()*.35+.08});
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    const g=ctx.createRadialGradient(W*.5,H*.4,0,W*.5,H*.4,W*.7);
+    g.addColorStop(0,'rgba(14,162,122,0.07)');g.addColorStop(1,'rgba(10,22,40,0)');
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+    ctx.strokeStyle='rgba(255,255,255,0.035)';ctx.lineWidth=1;
+    for(let x=0;x<W;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}
+    for(let y=0;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
+    particles.forEach((p,i)=>{
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(14,162,122,${p.o})`;ctx.fill();
+      particles.slice(i+1).forEach(b=>{const d=Math.hypot(p.x-b.x,p.y-b.y);if(d<80){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle=`rgba(14,162,122,${.1*(1-d/80)})`;ctx.lineWidth=1;ctx.stroke()}});
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+  const txns=[{from:'€500 EUR',to:'0.0082 BTC',ms:'12ms',country:'🇩🇪'},{from:'£320 GBP',to:'368 USDC',ms:'9ms',country:'🇬🇧'},{from:'$1,200 USD',to:'0.0196 ETH',ms:'18ms',country:'🇺🇸'},{from:'₪800 ILS',to:'210 USDT',ms:'11ms',country:'🇮🇱'},{from:'€250 EUR',to:'0.0041 BTC',ms:'14ms',country:'🇫🇷'},{from:'$750 USD',to:'750 USDC',ms:'7ms',country:'🇨🇦'},{from:'A$400',to:'0.0052 BTC',ms:'16ms',country:'🇦🇺'}];
+  const ticker=document.getElementById('igTicker');
+  let idx=0;
+  function addTick(){
+    const t=txns[idx++%txns.length];
+    const el=document.createElement('div');el.className='ig-tick';
+    el.innerHTML=`<span class="ig-tick-left">${t.country} ${t.from}</span><span><span class="ig-tick-right">${t.to}</span><span class="ig-tick-badge">${t.ms}</span></span>`;
+    ticker.insertBefore(el,ticker.firstChild);
+    if(ticker.children.length>3)ticker.removeChild(ticker.lastChild);
+  }
+  addTick();setInterval(addTick,1800);
+  const nodes=[document.getElementById('igNode1'),document.getElementById('igNode2'),document.getElementById('igNode3')];
+  let ni=0;setInterval(()=>{nodes.forEach(n=>n.classList.remove('active'));nodes[ni++%3].classList.add('active')},800);
+})();
 </script>
 </body>
 </html>
